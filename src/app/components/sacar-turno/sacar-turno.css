@@ -1,0 +1,175 @@
+.card-container {
+    max-width: 80%;
+}
+
+/* ---------------------------------------------------------------------- */
+
+.especialidades-grid {
+    display: flex;
+    gap: 0.3rem;
+    justify-items: center;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #51db84;
+    padding-bottom: 1.5rem;
+    padding-top: 0.5rem;
+    gap: 1rem;
+}
+
+.especialidad-card {
+    max-width: 40%;
+    max-height: 40%;
+    border-radius: 10px;
+    border: 2px solid var(--c-primary-dark);
+    background: var(--c-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    padding: 0.3rem;
+}
+
+.especialidad-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.especialidad-card.seleccionada {
+    border-color: var(--c-accent);
+    background-color: var(--c-primary-dark);
+}
+
+.especialidad-icono-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+}
+
+.especialidad-nombre {
+    font-weight: 600;
+    color: var(--c-neutral);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------- */
+.profesionales-grid {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #51db84;
+    padding-bottom: 1.5rem;
+    padding-top: 0.5rem;
+    gap: 1rem;
+}
+
+.profesional-card {
+    max-width: 100%;
+    max-height: 20%;
+    border-radius: 10px;
+    border: 2px solid var(--c-primary-dark);
+    background: var(--c-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    padding: 0.3rem;
+}
+
+.profesional-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.profesional-card.seleccionada {
+    border-color: var(--c-accent);
+    background-color: var(--c-primary-dark);
+}
+
+.profesional-foto img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+}
+
+.profesional-nombre {
+    font-weight: 600;
+    color: var(--c-neutral);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------- */
+
+.dias-grid {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.dia-card {
+    border: 2px solid var(--c-primary-dark);
+    border-radius: 8px;
+    background: var(--c-primary);
+    color: var(--c-neutral);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 1rem;
+}
+
+.dia-card:hover {
+    transform: translateY(-2px);
+}
+
+.dia-card.seleccionado {
+    border-color: var(--c-accent);
+    background-color: var(--c-primary-dark);
+}
+
+/* ---------------------------------------------------------------------- */
+.turnos-container {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--c-accent);
+}
+
+.turnos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.turnos-semana {
+    margin-bottom: 1.5rem;
+}
+
+
+.turno-buttons {
+    border: 2px solid var(--c-primary-dark);
+    border-radius: 8px;
+    background: var(--c-primary);
+    color: var(--c-neutral);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.turno-buttons:hover {
+    transform: translateY(-2px);
+    border-color: var(--c-accent);
+}
+
+.turno-dia {
+    color: var(--c-primary-light);
+    font-size: 0.9rem;
+}

@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="assets/favicon.png">Clinica Online
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                @switch (userData?.perfil) {
+                @case ('admin') {
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('usuarios')">Habilitar Especialistas</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('registro-admin')">Registrar un Administrador</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('mi-perfil')">Mi Perfil</a></li>
+                }
+                @case ('especialista') {
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('mis-turnos')">Mis Turnos</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('mi-perfil')">Mi Perfil</a></li>
+                }
+                @case ('paciente') {
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('sacar-turno')">Sacar Turno</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('mis-turnos')">Mis Turnos</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="goTo('mi-perfil')">Mi Perfil</a></li>
+                }
+                @default {
+                <li class="nav-item"><a class="nav-link" (click)="goTo('login')">Login</a></li>
+                <li class="nav-item"><a class="nav-link" (click)="goTo('registro')">Registro</a></li>
+                }
+                }
+
+                @if (userData) {
+                <li class="nav-item me-3">
+                    <span class="nav-link usuario-nombre">
+                        {{ userData.nombre }} {{ userData.apellido }}
+                    </span>
+                </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

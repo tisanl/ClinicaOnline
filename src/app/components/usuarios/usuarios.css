@@ -1,0 +1,128 @@
+:host ::ng-deep .card-container {
+    max-width: none;
+    width: 50%;
+}
+
+.lista-usuarios {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    color: #f5f5f5;
+}
+
+.usuario-item {
+    background-color: var(--c-primary-dark);
+    border: 1px solid var(--c-primary);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.usuario-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.usuario-item h3 {
+    color: var(--c-accent);
+    margin: 0 0 0.5rem;
+}
+
+.usuario-item p {
+    color: var(--c-primary-light);
+    margin: 0 0 0.5rem;
+    font-weight: 500;
+}
+
+.usuario-item ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.usuario-item li {
+    background-color: var(--c-primary);
+    color: var(--c-neutral);
+    margin: 0.25rem 0;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.estado {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 0.5rem;
+}
+
+.estado-pendiente {
+    background-color: var(--c-neutral);
+    color: var(--c-primary-light) !important;
+}
+
+.estado-habilitado {
+    background-color: #00b37a;
+    color: #fff !important;
+}
+
+.estado-inhabilitado {
+    background-color: red;
+    color: var(--c-neutral) !important;
+}
+
+.botones-acciones {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.btn-habilitar {
+    background-color: #00b37a;
+    color: #fff;
+}
+
+.btn-inhabilitar {
+    background-color: red;
+    color: var(--c-primary-light);
+}
+
+.btn-habilitar:disabled,
+.btn-inhabilitar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.foto-usuario {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 0.8rem;
+}

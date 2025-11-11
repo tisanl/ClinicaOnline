@@ -1,0 +1,72 @@
+/*
+Class nav
+navbar: clase base de bootstrapp
+navbar-expand-lg: hace que los botones de la derecha del todo se muestren o no en menu
+navbar-dark bg-dark: lo ponen en oscuro
+*/
+
+.navbar {
+    background-color: var(--c-neutral);
+    padding-top: 0.01rem;
+    padding-bottom: 0.01rem;
+}
+
+.navbar-brand {
+    color: var(--c-accent);
+}
+
+.navbar-brand img {
+    height: 64px;
+}
+
+/*
+class="navbar-toggler": le da estilo al botón según Bootstrap (forma, borde y posición).
+data-bs-toggle="collapse": le dice a Bootstrap que este botón controlará un elemento que se puede colapsar (mostrar/ocultar).
+data-bs-target="#navbarNav": especifica qué elemento se va a abrir o cerrar; en este caso, el contenedor con id="navbarNav".
+aria-controls="navbarNav": atributo de accesibilidad que informa qué parte controla este botón.
+aria-expanded="false": indica si el menú está abierto o cerrado (Bootstrap cambia este valor dinámicamente).
+aria-label="Toggle navigation": texto que leen los lectores de pantalla, útil para accesibilidad.
+
+filter: invert(1) deja visible el ícono sobre fondos oscuros.
+*/
+
+.navbar-toggler {
+    background-color: var(--c-primary);
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/*
+<div class="collapse navbar-collapse" id="navbarNav">: es el contenedor que agrupa los enlaces del menú.
+collapse permite que este bloque se oculte en pantallas pequeñas.
+navbar-collapse define el estilo de expansión del menú dentro del navbar.
+id="navbarNav" sirve para vincular este bloque con el botón (data-bs-target="#navbarNav").
+
+<ul class="navbar-nav ms-auto">: es la lista de enlaces.
+navbar-nav aplica el formato de navegación de Bootstrap.
+ms-auto (margin-start auto) empuja la lista hacia la derecha.
+
+<li class="nav-item">: define cada ítem del menú.
+<a class="nav-link active" routerLink="/">Inicio</a>:
+nav-link da estilo al enlace.
+active marca el enlace actual.
+routerLink="/" indica a Angular qué ruta cargar al hacer clic.
+*/
+
+.navbar .nav-link {
+    color: var(--c-primary-light);
+    cursor: pointer;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: var(--c-accent);
+}
+
+.usuario-nombre {
+    color: var(--c-accent) !important;;
+    font-weight: 500;
+    white-space: nowrap;
+}

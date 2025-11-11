@@ -1,0 +1,72 @@
+<main class="card-container ">
+    <h2 class="titulo">Registro de Usuario Administrador</h2>
+
+    <form class="form-container" [formGroup]="form">
+        <div class="input">
+            <label>Nombre</label>
+            <input type="text" placeholder="Nombre" formControlName="nombre" />
+            <small [style.visibility]="nombre?.invalid && nombre?.touched ? 'visible' : 'hidden'">
+                El nombre es obligatorio, solo puede contener letras y espacios.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Apellido</label>
+            <input type="text" placeholder="Apellido" formControlName="apellido" />
+            <small [style.visibility]="apellido?.invalid && apellido?.touched ? 'visible' : 'hidden'">
+                El apellido es obligatorio, solo puede contener letras y espacios.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Dni</label>
+            <input type="text" placeholder="Dni" formControlName="dni" />
+            <small [style.visibility]="dni?.invalid && dni?.touched ? 'visible' : 'hidden'">
+                El dni es obligatorio, debe contener 8 o 9 dígitos.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Edad</label>
+            <input type="text" placeholder="Edad" formControlName="edad" />
+            <small [style.visibility]="edad?.invalid && edad?.touched ? 'visible' : 'hidden'">
+                La edad es obligatoria, debe ser mayor a 18 o menor a 120.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Correo Electrónico</label>
+            <input type="email" placeholder="Correo" formControlName="email" />
+            <small [style.visibility]="email?.invalid && email?.touched ? 'visible' : 'hidden'">
+                Ingresar un mail válido.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Contraseña</label>
+            <input type="password" placeholder="Contraseña" formControlName="password" />
+            <small [style.visibility]="password?.invalid && password?.touched ? 'visible' : 'hidden'">
+                La contraseña debe contener un mínimo de 6 caracteres.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Imagen de perfil</label>
+            <input type="file" accept="image/*" (change)="onFileSelected($event,'imagen1'); imagen1?.markAsTouched()" />
+            <small [style.visibility]="imagen1?.invalid && imagen1?.touched ? 'visible' : 'hidden'">
+                La imagen es obligatoria.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Contraseña Propia</label>
+            <input type="password" placeholder="Contraseña" formControlName="passwordAdmin" />
+            <small [style.visibility]="passwordAdmin?.invalid && passwordAdmin?.touched ? 'visible' : 'hidden'">
+                Es obligatoria para registrar al usuario. Debe contener un mínimo de 6 caracteres.
+            </small>
+        </div>
+
+    </form>
+
+    <button type="button" class="btn-1" (click)="registrarUsuario()">Registrar</button>
+</main>

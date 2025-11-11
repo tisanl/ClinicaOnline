@@ -1,0 +1,23 @@
+<main class="card-container">
+    <h2 class="titulo">Mis Turnos</h2>
+
+    <div class="turno-especialidades">
+        <h4 class="titulo">Sacar turno</h4>
+
+        <h3 class="subtitulo-turno">Elegí una especialidad</h3>
+
+        <div class="especialidades-grid">
+            @for (e of especialidades; track e.id) {
+            <button type="button" class="especialidad-card" [class.seleccionada]="especialidadSeleccionada?.id === e.id"
+                (click)="seleccionarEspecialidad(e)">
+                <!-- Placeholder para futuro icono/imagen -->
+                <div class="especialidad-icono-placeholder"></div>
+
+                <span class="especialidad-nombre">
+                    {{ e.nombre }}
+                </span>
+            </button>
+            }
+        </div>
+    </div>
+</main>

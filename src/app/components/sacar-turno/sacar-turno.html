@@ -1,0 +1,72 @@
+<main class="card-container">
+    <h2 class="titulo">Sacar Turno</h2>
+
+    <div class="especialidades">
+        <h6 class="sub-titulo">Elegí una especialidad</h6>
+
+        <div class="especialidades-grid">
+            @for (e of especialidades; track e.id) {
+            <button type="button" class="especialidad-card" [class.seleccionada]="especialidadSeleccionada?.id === e.id"
+                (click)="seleccionarEspecialidad(e)">
+                <!-- Placeholder para futuro icono/imagen -->
+                <div class="especialidad-icono-placeholder"></div>
+
+                <span class="especialidad-nombre">
+                    {{ e.nombre }}
+                </span>
+            </button>
+            }
+        </div>
+    </div>
+
+    <div class="profesionales">
+        <h6 class="sub-titulo">Elegí un profesional</h6>
+
+        <div class="profesionales-grid">
+            @for (p of profesionales; track p.id) {
+            <div class="profesional-card" [class.seleccionada]="profesionalSeleccionado?.id === p.id"
+                (click)="seleccionarProfesional(p)">
+                <div class="profesional-foto">
+                    <img [src]="p.imagen_1_path" alt="{{ p.nombre }}" />
+                </div>
+                <span class="profesional-nombre">{{ p.nombre }} {{ p.apellido }}</span>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="turno-dias">
+        <h6 class="sub-titulo">Elegí un dia</h6>
+
+        <div class="dias-grid">
+            @for (d of diasDisponibles; track d.dia_semana) {
+            <button type="button" class="dia-card" [class.seleccionado]="diaSeleccionado === d.dia_semana"
+                (click)="seleccionarDia(d)">
+                {{ obtenerNombreDia(d.dia_semana) }}
+            </button>
+            }
+        </div>
+    </div>
+
+    <div class="turnos-container">
+        <h3 class="sub-titulo">Turnos disponibles</h3>
+
+        @for (bloque of turnosSemanas; track bloque.fecha) {
+        <div class="turnos-semana">
+            <h4 class="turno-dia">
+                {{ obtenerNombreDia(bloque.fecha.getDay()) }}:
+                {{ bloque.fecha | date: 'dd/MM' }}
+            </h4>
+
+            <div class="turnos-grid">
+                @for (t of bloque.turnos; track t) {
+                <button type="button" class="turno-buttons" (click)="seleccionarTurno(bloque.fecha, t)">
+                    {{ t }}
+                </button>
+                }
+            </div>
+        </div>
+        }
+    </div>
+
+</main>

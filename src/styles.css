@@ -1,1 +1,108 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --c-primary: #009688;
+  /* turquesa */
+  --c-primary-dark: #00796B;
+  /* turquesa oscuro */
+  --c-primary-light: #B2DFDB;
+  /* turquesa claro */
+  --c-accent: #FFC107;
+  /* ámbar */
+  --c-neutral: #24292e;
+  /* gris azulado oscuro */
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.8); /* capa sutil detrás */
+  border-radius: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* sombra leve */
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.titulo {
+  width: 100%;
+  text-align: center;
+  color: var(--c-primary-dark);
+}
+
+.sub-titulo {
+  width: 100%;
+  text-align: center;
+  color: var(--c-accent);
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* alinea todo a la izquierda */
+  width: 100%;
+  max-width: 640px;
+  gap: 0.5rem;
+  padding: 1.2rem;
+  border-radius: 16px;
+}
+
+.input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input label {
+  color: var(--c-primary-dark);
+  font-weight: 600;
+}
+
+.input input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--c-primary-light);
+  font-size: 1rem;
+  color: white;
+}
+
+.input input:focus {
+  outline: none;
+  border-bottom-color: var(--c-primary);
+}
+
+.input small {
+  color: red;
+  font-size: 0.85rem;
+  display: block;
+}
+
+.btn-1 {
+  background-color: var(--c-primary);
+  color: var(--c-neutral);
+  border: 2px solid var(--c-primary-dark);
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.btn-1:hover {
+  background-color: var(--c-primary-dark);
+  color: var(--c-accent);
+  transform: scale(1.03);
+}
+
+.btn-1:active {
+  background-color: var(--c-primary-light);
+  transform: scale(0.98);
+}
+
+html, body { height: 100%; }
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

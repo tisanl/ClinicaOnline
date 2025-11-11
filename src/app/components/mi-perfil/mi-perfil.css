@@ -1,0 +1,166 @@
+:host ::ng-deep .card-container {
+    width: 400vh;
+}
+
+.titulo-perfil {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--c-accent);
+}
+
+.perfil-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--c-primary-dark);
+    padding-bottom: 1rem;
+}
+
+.perfil-foto {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--c-primary);
+}
+
+.perfil-datos h3 {
+    margin: 0;
+    color: var(--c-primary-light);
+}
+
+.perfil-datos p {
+    margin: 0.25rem 0;
+    color: var(--c-accent);
+}
+
+.perfil-especialista-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--c-primary-dark);
+}
+
+.perfil-especialista h4 {
+    margin-top: 0.5rem;
+    color: var(--c-primary);
+}
+
+.perfil-especialista h5 {
+    color: var(--c-accent);
+}
+
+.perfil-especialista h6 {
+    color: var(--c-primary-light);
+}
+
+.perfil-especialista ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.perfil-especialista li {
+    color: var(--c-primary-light);
+}
+
+.perfil-especialista-horarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lista-horarios {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.horario-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--c-neutral);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    border-left: 4px solid transparent;
+    transition: background 0.3s ease, border-left-color 0.3s ease;
+}
+
+.horario-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.perfil-especialista label {
+    color: var(--c-accent);
+}
+
+.horario-item.activo {
+    background-color: rgba(0, 150, 136, 0.15);
+    border-left-color: var(--c-primary);
+}
+
+.horario-item.inactivo {
+    background-color: rgba(255, 0, 0, 0.15);
+    border-left-color: #e57373;
+}
+
+.fila-horario {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.dia {
+    width: 75px;
+    font-weight: 600;
+    color: var(--c-primary-light);
+}
+
+.check-atiende {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--c-primary) !important;
+    font-weight: 600;
+}
+
+.input {
+    width: 100px;
+    display: flex;
+    flex-direction: row !important;
+    align-items: flex-end !important;
+    gap: 10px;
+}
+
+.horas-con-error {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-msg {
+    color: #e57373;
+    font-size: 0.85rem;
+    margin: 0.25rem 0 0 0.25rem;
+}
+
+.especialista-botones {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.deshabilitado {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}

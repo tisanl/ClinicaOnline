@@ -1,0 +1,143 @@
+<main class="card-container ">
+    <h2 class="titulo">Registro de Usuario</h2>
+
+    <form class="form-container" [formGroup]="form">
+        <div class="input">
+            <label>Nombre</label>
+            <input type="text" placeholder="Tu nombre" formControlName="nombre" />
+            <small [style.visibility]="nombre?.invalid && nombre?.touched ? 'visible' : 'hidden'">
+                El nombre es obligatorio, solo puede contener letras y espacios.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Apellido</label>
+            <input type="text" placeholder="Tu apellido" formControlName="apellido" />
+            <small [style.visibility]="apellido?.invalid && apellido?.touched ? 'visible' : 'hidden'">
+                El apellido es obligatorio, solo puede contener letras y espacios.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Dni</label>
+            <input type="text" placeholder="Tu dni" formControlName="dni" />
+            <small [style.visibility]="dni?.invalid && dni?.touched ? 'visible' : 'hidden'">
+                El dni es obligatorio, debe contener 8 o 9 dígitos.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Edad</label>
+            <input type="text" placeholder="Tu edad" formControlName="edad" />
+            <small [style.visibility]="edad?.invalid && edad?.touched ? 'visible' : 'hidden'">
+                La edad es obligatoria, debe ser mayor a 18 o menor a 120.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Correo Electrónico</label>
+            <input type="email" placeholder="Tu correo" formControlName="email" />
+            <small [style.visibility]="email?.invalid && email?.touched ? 'visible' : 'hidden'">
+                Ingresar un mail válido.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Contraseña</label>
+            <input type="password" placeholder="Contraseña" formControlName="password" />
+            <small [style.visibility]="password?.invalid && password?.touched ? 'visible' : 'hidden'">
+                La contraseña debe contener un mínimo de 6 caracteres.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Imagen de perfil</label>
+            <input type="file" accept="image/*" (change)="onFileSelected($event,'imagen1'); imagen1?.markAsTouched()" />
+            <small [style.visibility]="imagen1?.invalid && imagen1?.touched ? 'visible' : 'hidden'">
+                La imagen es obligatoria.
+            </small>
+        </div>
+
+        <div class="perfil-selector">
+            <div class="row opciones">
+                <button type="button" class="btn-opcion-perfil" [class.selected]="perfil?.value === 'paciente'"
+                    (click)="perfil?.setValue('paciente')">
+                    <img src="assets/avatar-paciente.png" alt="Paciente" />
+                    <span>Paciente</span>
+                </button>
+
+                <button type="button" class="btn-opcion-perfil" [class.selected]="perfil?.value === 'especialista'"
+                    (click)="perfil?.setValue('especialista')">
+                    <img src="assets/avatar-especialista.png" alt="Especialista" />
+                    <span>Especialista</span>
+                </button>
+            </div>
+
+            <div class="row mensaje-error">
+                <small [style.visibility]="perfil?.invalid && perfil?.touched ? 'visible' : 'hidden'">
+                    Debe seleccionar un perfil.
+                </small>
+            </div>
+        </div>
+
+    </form>
+
+    @if (perfil?.value === 'paciente') {
+    <form class="form-container" [formGroup]="formPaciente">
+        <div class="input">
+            <label>Obra Social</label>
+            <input type="text" placeholder="Obra Social" formControlName="obraSocial" />
+            <small [style.visibility]="obraSocial?.invalid && obraSocial?.touched ? 'visible' : 'hidden'">
+                La obra social es obligatoria.
+            </small>
+        </div>
+
+        <div class="input">
+            <label>Imagen 2</label>
+            <input type="file" accept="image/*" (change)="onFileSelected($event,'imagen2'); imagen2?.markAsTouched()" />
+            <small [style.visibility]="imagen2?.invalid && imagen2?.touched ? 'visible' : 'hidden'">
+                La imagen es obligatoria.
+            </small>
+        </div>
+    </form>
+    }
+
+    @if (perfil?.value === 'especialista') {
+    <form class="form-container" [formGroup]="formEspecialista">
+        <div class="input">
+            <label>Especialidades</label>
+
+            <!-- lista de especialidades con checkboxes -->
+            <div class="especialidades-lista">
+                @for (esp of especialidades; track esp.id) {
+                <label class="chk-especialidad">
+                    <input type="checkbox" [value]="esp.id" (change)="onToggleEspecialidad(esp.id, $event)" />
+                    <span>{{ esp.nombre }}</span>
+                </label>
+                }
+            </div>
+            <small
+                [style.visibility]=" especialidadesChecks?.invalid && especialidadesChecks?.touched ? 'visible' : 'hidden'">
+                Debe seleccionar al menos una especialidad.
+            </small>
+        </div>
+        <div class="input">
+            <label>Nueva Especialidad</label>
+            <input type="text" placeholder="Nueva Especialidad" formControlName="especialidadNueva" />
+            <small [style.visibility]="especialidadNueva?.invalid ? 'visible' : 'hidden'">
+                La especialidad solo debe contener caracteres alfabeticos y espacios.
+            </small>
+            <button type="button" class="btn-1" (click)="agregarEspecialidad()"
+                [ngClass]="{'deshabilitado': (!especialidadNueva?.value || especialidadNueva?.invalid)}" >
+                Agregar Especialidad
+            </button>
+        </div>
+    </form>
+    }
+
+    <button type="button" class="btn-1" (click)="registrarUsuario()">Registrarse</button>
+    <p class="registro-texto">
+        ¿Ya tenes cuenta?
+        <button type="button" class="btn-registro" (click)="goTo('login')">Ingresar</button>
+    </p>
+</main>

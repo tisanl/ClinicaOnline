@@ -1,0 +1,33 @@
+.registro-texto {
+    text-align: center;
+    color: var(--c-primary-light);
+}
+
+.registro-texto .btn-registro {
+    margin-left: 0.3rem;
+}
+
+.btn-registro {
+    background: none;
+    color: var(--c-accent);
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease-in-out;
+}
+
+.btn-registro:hover {
+    color: #e0a800;
+    text-decoration: underline;
+}
+
+.fab-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

@@ -1,0 +1,12 @@
+/*
+<div class="container py-4"> → crea un contenedor con márgenes laterales y py-4 agrega padding vertical.
+<div class="row align-items-center"> → define una fila de la grilla; align-items-center centra verticalmente las columnas.
+<div class="col-lg-6"> → ocupa la mitad del ancho en pantallas grandes (texto).
+<div class="col-lg-6 text-center text-lg-end"> → la otra mitad (imagen), alineada a la derecha en pantallas grandes.
+class="img-fluid" → hace que la imagen sea responsive (se adapta al tamaño del contenedor).
+*/
+
+h1 {
+    font-size: 12rem;
+    color: var(--c-primary-dark);
+}

@@ -1,0 +1,56 @@
+<main class="card-container">
+    <section class="home-header">
+        <h1 class="home-title">
+            <span class="home-title-bienvenido">Bienvenido,</span>
+            <span class="home-title-usuario">{{ userData?.nombre }} {{ userData?.apellido }}</span>
+        </h1>
+    </section>
+
+    <section class="home-cards">
+        @if (userData?.perfil === 'admin') {
+        <div class="home-card" (click)="goTo('usuarios')">
+            <mat-icon>group</mat-icon>
+            <h2 class="sub-titulo">Usuarios</h2>
+            <p class="home-card-text">Listado de usuarios.</p>
+        </div>
+        }
+
+        @if (userData?.perfil === 'admin') {
+        <div class="home-card" (click)="goTo('registro-admin')">
+            <mat-icon>person_add</mat-icon>
+            <h2 class="sub-titulo">Registrar un Administrador</h2>
+            <p class="home-card-text">Formulario de registro de un administrador.</p>
+        </div>
+        }
+
+        @if (userData?.perfil === 'paciente') {
+        <div class="home-card" (click)="goTo('sacar-turno')">
+            <mat-icon>medical_services</mat-icon>
+            <h2 class="sub-titulo">Sacar un Turno</h2>
+            <p class="home-card-text">Retirar un turno de la especialidad buscada.</p>
+        </div>
+        }
+
+        @if (userData?.perfil !== 'admin') {
+        <div class="home-card" (click)="goTo('mis-turnos')">
+            <mat-icon>event_available</mat-icon>
+            <h2 class="sub-titulo">Mis Turnos</h2>
+            <p class="home-card-text">Listado de mis turnos.</p>
+        </div>
+        }
+
+        <div class="home-card" (click)="goTo('mi-perfil')">
+            <mat-icon>medical_services</mat-icon>
+            <h2 class="sub-titulo">Mi Perfil</h2>
+            <p class="home-card-text">Mis datos.</p>
+        </div>
+    </section>
+
+    <div class="log-out">
+        <div class="home-card" (click)="cerrarSesion()">
+            <mat-icon>account_circle_off</mat-icon>
+            <h2 class="sub-titulo">Cerrar sesion</h2>
+            <p class="home-card-text">Se cerrara la sesion. La proxima vez se debera volver a ingresar.</p>
+        </div>
+    </div>
+</main>

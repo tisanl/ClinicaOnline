@@ -1,0 +1,41 @@
+<main class="card-container ">
+    <h2 class="titulo">Usuarios</h2>
+
+    <div class="lista-usuarios">
+        @for (u of usuarios; track u.id) {
+        <div class="usuario-item">
+            <img [src]="u.imagen_1_path" alt="{{ u.nombre }}" class="foto-usuario">
+            <h3>{{ u.nombre }} {{ u.apellido }}</h3>
+            <h5>{{ capitalizar(u.perfil) }}</h5>
+            <h5>{{ u.email }}</h5>
+
+            @if (u.perfil === 'especialista') {
+            <p class="estado" [ngClass]="{
+                'estado-pendiente': u.estado === 'pendiente_validacion',
+                'estado-habilitado': u.estado === 'habilitado',
+                'estado-inhabilitado': u.estado === 'inhabilitado'
+            }">
+                {{ u.estado === 'pendiente_validacion' ? 'Pendiente de validación' : (u.estado | titlecase) }}
+            </p>
+
+            <ul>
+                @for (e of u.usuario_especialidad; track e.especialidades.id) {
+                <li>{{ e.especialidades.nombre }}</li>
+                }
+            </ul>
+
+            <div class="botones-acciones">
+                @if (u.estado === 'pendiente_validacion') {
+                <button class="btn-habilitar" (click)="cambiarEstado(u.id, 'habilitado')">Habilitar</button>
+                <button class="btn-inhabilitar" (click)="cambiarEstado(u.id, 'inhabilitado')">Inhabilitar</button>
+                } @else if (u.estado === 'habilitado') {
+                <button class="btn-inhabilitar" (click)="cambiarEstado(u.id, 'inhabilitado')">Inhabilitar</button>
+                } @else if (u.estado === 'inhabilitado') {
+                <button class="btn-habilitar" (click)="cambiarEstado(u.id, 'habilitado')">Habilitar</button>
+                }
+            </div>
+            }
+        </div>
+        }
+    </div>
+</main>

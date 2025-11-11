@@ -1,0 +1,78 @@
+.card-container {
+    width: 50%;
+    max-width: none;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.home-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.home-title {
+    display: flex;
+    gap: 1rem;
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+.home-title-bienvenido {
+    color: var(--c-primary-light);
+}
+
+.home-title-usuario {
+    color: var(--c-accent);
+}
+
+.home-cards {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.home-card {
+    max-width: 280px;
+    min-width: 280px;
+    background-color: var(--c-primary-dark);
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.home-card:hover {
+    transform: translateY(-4px);
+    background-color: var(--c-primary);
+}
+
+.home-card-title {
+    font-size: 1.2rem;
+    font-size: 1.2rem;
+}
+
+.home-card-text {
+    margin: 0;
+    color: var(--c-primary-light);
+    font-size: 1rem;
+}
+
+.home-card mat-icon {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 100px;
+    width: 100px;
+    height: 100px;
+}
+
+.log-out {
+    margin-top: 1rem;
+}

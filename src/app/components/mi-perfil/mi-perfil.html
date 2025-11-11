@@ -1,0 +1,79 @@
+<main class="card-container">
+    <h2 class="titulo-perfil">Mi Perfil</h2>
+
+    <div class="perfil-header">
+        <img [src]="usuario!.imagen_1_path" alt="{{ usuario!.nombre }}" class="perfil-foto" />
+
+        <div class="perfil-datos">
+            <h3>{{ capitalizar(usuario!.nombre) }} {{ usuario!.apellido }}</h3>
+            <p>{{ usuario!.email }}</p>
+            <p>{{ capitalizar(usuario!.perfil) }}</p>
+        </div>
+    </div>
+
+    @if (usuario!.perfil === 'especialista') {
+    <div class="perfil-especialista">
+        <div class="perfil-especialista-header">
+            <h4>Especialidades</h4>
+            <ul>
+                @for (e of usuario!.usuario_especialidad; track e.especialidades.id) {
+                <li>{{ e.especialidades.nombre }}</li>
+                }
+            </ul>
+        </div>
+
+        <div class="perfil-especialista-horarios">
+            <h4>Horarios de Atención</h4>
+            <h5>Los horarios son:</h5>
+            <h6>Lunes a Viernes: 09:00 a 18:00 hs</h6>
+            <h6>Sábados: 09:00 a 14:00 hs</h6>
+            <form [formGroup]="horariosForm">
+                <div formArrayName="horarios" class="lista-horarios">
+                    @for (h of horariosArray.controls; let i = $index; track i) {
+                    <div [formGroupName]="i" class="horario-item" [class.activo]="h.value.activo"
+                        [class.inactivo]="!h.value.activo">
+                        <div class="horario-fila">
+                            <span class="dia">{{ obtenerNombreDia(h.value.dia_semana) }}</span>
+
+                            <label class="check-atiende">
+                                <span>Atiende</span>
+                                <input type="checkbox" formControlName="activo" />
+                            </label>
+
+                            <div class="input">
+                                <label>Desde</label>
+                                <input formControlName="hora_inicio"
+                                    [ngClass]="{ 'deshabilitado': h.get('activo')?.value === false }" />
+                            </div>
+
+                            <div class="input">
+                                <label>Hasta</label>
+                                <input formControlName="hora_fin"
+                                    [ngClass]="{ 'deshabilitado': h.get('activo')?.value === false }" />
+                            </div>
+                        </div>
+                        @if (
+                        h.get('activo')?.value &&
+                        (
+                        (h.get('hora_inicio')?.touched && h.get('hora_inicio')?.invalid) && !h.get('hora_inicio')?.value
+                        ||
+                        (h.get('hora_fin')?.touched && h.get('hora_fin')?.invalid && !h.get('hora_fin')?.value)
+                        || h.getError('horarioInvalido') && h.get('activo')?.value
+                        )
+                        ) {
+                        <p class="error-msg">Horarios invalidos. El horario de fin debe ser mayor a inicio</p>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <div class="especialista-botones">
+                    <button class="btn-1" (click)="guardarHorarios()" [ngClass]="{ 'deshabilitado': horariosForm.dirty === false }">
+                        Guardar cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    }
+</main>
