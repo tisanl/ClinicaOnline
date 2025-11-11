@@ -4,7 +4,7 @@ import { SupabaseService } from './supabase-service';
 import { User } from '@supabase/supabase-js';
 import { EspecialidadesService } from './especialidades-service';
 import { Especialidad } from './especialidades-service';
-import { HorarioEspecialista } from './horarios-especialista-service';
+import { HorarioEspecialista, HorariosEspecialistaService } from './horarios-especialista-service';
 
 export interface UserData {
   nombre: string;
@@ -40,7 +40,7 @@ export class UsuarioService {
   private userSubject = new BehaviorSubject<User | null>(null);
   public userObservable = this.userSubject.asObservable();
 
-  constructor(private db: SupabaseService, private e: EspecialidadesService) {
+  constructor(private db: SupabaseService, private e: EspecialidadesService, private he: HorariosEspecialistaService) {
     this.initAuth();
   }
 
@@ -135,7 +135,10 @@ export class UsuarioService {
     usuario.id = data.user!.id
     if (usuario.perfil == 'especialista') usuario.estado = 'pendiente_validacion'
     await this.guardarBD(usuario)
-    if (usuario.perfil == 'especialista') await this.e.guardarEspecialidadesUsuario(usuario.id, usuario.lista_especialidades_id!)
+    if (usuario.perfil == 'especialista'){
+      await this.e.guardarEspecialidadesUsuario(usuario.id, usuario.lista_especialidades_id!)
+      await this.he.crearHorariosBaseParaEspecialista(usuario.id)
+    } 
     return true
   }
 

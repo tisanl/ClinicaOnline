@@ -43,4 +43,45 @@ export class TurnosService {
     return true;
   }
 
+  async obtenerTurnosPorUsuario(usuarioId: string, perfil: string): Promise<Turno[]> {
+    let data: any[] | null = null;
+    let error: any = null;
+
+    if (perfil === 'paciente') {
+      ({ data, error } = await this.db.cliente
+        .from('turnos')
+        .select(`
+      *,
+      especialidades ( nombre ),
+      id_especialista ( nombre, apellido )
+    `)
+        .eq('id_paciente', usuarioId));
+    }
+    else if (perfil === 'especialista') {
+      ({ data, error } = await this.db.cliente
+        .from('turnos')
+        .select(`
+      *,
+      especialidades ( nombre ),
+      id_paciente ( nombre, apellido )
+    `)
+        .eq('id_especialista', usuarioId));
+    }
+    else {
+      ({ data, error } = await this.db.cliente
+        .from('turnos')
+        .select(`
+        *,
+        especialidades ( nombre ),
+        id_paciente ( nombre, apellido ),
+        id_especialista ( nombre, apellido )
+      `));
+    }
+
+    if (error)
+      throw new Error(error.message);
+
+    return data || [];
+  }
+
 }
