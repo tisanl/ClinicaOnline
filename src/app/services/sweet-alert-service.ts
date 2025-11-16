@@ -59,4 +59,34 @@ export class SweetAlertService {
 
     return resultado.isConfirmed;
   }
+
+  async pedirInput(titulo: string, texto: string, placeholder: string = ''): Promise<string | null> {
+    const result = await Swal.fire({
+      title: titulo,
+      text: texto,
+      input: 'text',
+      inputPlaceholder: placeholder,
+      inputAttributes: {
+        autocomplete: 'off'
+      },
+      background: '#24292e',
+      color: '#B2DFDB',
+      icon: 'question',
+      iconColor: '#FFC107',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+      confirmButtonColor: '#009688',
+      cancelButtonColor: '#d32f2f',
+      inputValidator: (value) => {
+        if (!value || value.trim() === '') {
+          return 'Este campo es obligatorio';
+        }
+        return null;
+      }
+    });
+
+    return result.isConfirmed ? result.value : null;
+  }
 }

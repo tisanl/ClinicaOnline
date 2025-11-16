@@ -353,4 +353,23 @@ export class UsuarioService {
         : null,
     }));
   }
+
+  async obtenerUsuariosPacientes(): Promise<Usuario[]> {
+  const { data, error } = await this.db.cliente
+    .from('usuarios')
+    .select(`*`)
+    .eq('perfil', 'paciente');
+
+  if (error) throw new Error('Problema accediendo a la base de datos');
+
+  return data.map(u => ({
+    ...u,
+    imagen_1_path: u.imagen_1_path
+      ? this.db.cliente.storage.from('images').getPublicUrl(u.imagen_1_path).data.publicUrl
+      : null,
+    imagen_2_path: u.imagen_2_path
+      ? this.db.cliente.storage.from('images').getPublicUrl(u.imagen_2_path).data.publicUrl
+      : null,
+  }));
+}
 }

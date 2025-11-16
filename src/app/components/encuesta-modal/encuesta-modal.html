@@ -1,0 +1,58 @@
+<main class="encuesta-modal" [formGroup]="form">
+    <h2 mat-dialog-title>Encuesta</h2>
+
+    <mat-dialog-content class="preguntas">
+        <mat-form-field>
+            <mat-label>Atención del especialista</mat-label>
+            <mat-select formControlName="atencion">
+                <mat-option value="muy-satisfecho">Muy satisfecho</mat-option>
+                <mat-option value="satisfecho">Satisfecho</mat-option>
+                <mat-option value="neutral">Neutral</mat-option>
+                <mat-option value="insatisfecho">Insatisfecho</mat-option>
+                <mat-option value="muy-insatisfecho">Muy insatisfecho</mat-option>
+            </mat-select>
+            @if (atencion!.invalid) {
+            <mat-error>Este campo es obligatorio</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Puntualidad</mat-label>
+            <mat-select formControlName="puntualidad">
+                <mat-option value="muy-satisfecho">Muy satisfecho</mat-option>
+                <mat-option value="satisfecho">Satisfecho</mat-option>
+                <mat-option value="neutral">Neutral</mat-option>
+                <mat-option value="insatisfecho">Insatisfecho</mat-option>
+                <mat-option value="muy-insatisfecho">Muy insatisfecho</mat-option>
+            </mat-select>
+            @if (puntualidad!.invalid && puntualidad!.touched) {
+            <mat-error>Este campo es obligatorio</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Resolución del turno</mat-label>
+            <mat-select formControlName="resolucion">
+                <mat-option value="muy-satisfecho">Muy satisfecho</mat-option>
+                <mat-option value="satisfecho">Satisfecho</mat-option>
+                <mat-option value="neutral">Neutral</mat-option>
+                <mat-option value="insatisfecho">Insatisfecho</mat-option>
+                <mat-option value="muy-insatisfecho">Muy insatisfecho</mat-option>
+            </mat-select>
+            @if (resolucion!.invalid && resolucion!.touched) {
+            <mat-error>Este campo es obligatorio</mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="acciones">
+        <button matButton="tonal" (click)="cancelar()">
+            Cancelar
+        </button>
+
+        <button matButton="filled" (click)="aceptar()">
+            Aceptar
+        </button>
+    </mat-dialog-actions>
+
+</main>

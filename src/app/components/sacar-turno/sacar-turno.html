@@ -1,6 +1,23 @@
 <main class="card-container">
     <h2 class="titulo">Sacar Turno</h2>
 
+    @if(u.userData!.perfil === 'admin'){
+    <div class="profesionales">
+        <h6 class="sub-titulo">Elegí un paciente</h6>
+        <div class="profesionales-grid">
+            @for (p of pacientes; track p.id) {
+            <div class="profesional-card" [class.seleccionada]="pacienteSeleccionado?.id === p.id"
+                (click)="seleccionarPaciente(p)">
+                <div class="profesional-foto">
+                    <img [src]="p.imagen_1_path" alt="{{ p.nombre }}" />
+                </div>
+                <span class="profesional-nombre">{{ p.nombre }} {{ p.apellido }}</span>
+            </div>
+            }
+        </div>
+    </div>
+    }
+
     <div class="especialidades">
         <h6 class="sub-titulo">Elegí una especialidad</h6>
 
@@ -19,6 +36,7 @@
         </div>
     </div>
 
+    @if(especialidadSeleccionada){
     <div class="profesionales">
         <h6 class="sub-titulo">Elegí un profesional</h6>
 
@@ -34,7 +52,9 @@
             }
         </div>
     </div>
+    }
 
+    @if(profesionalSeleccionado){
     <div class="turno-dias">
         <h6 class="sub-titulo">Elegí un dia</h6>
 
@@ -47,7 +67,9 @@
             }
         </div>
     </div>
+    }
 
+    @if(diaSeleccionado){
     <div class="turnos-container">
         <h3 class="sub-titulo">Turnos disponibles</h3>
 
@@ -68,5 +90,7 @@
         </div>
         }
     </div>
+    }
+
 
 </main>

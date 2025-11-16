@@ -1,0 +1,16 @@
+.encuesta-modal {
+    background: #f1f3f6;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.preguntas {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.acciones {
+    display: flex;
+    gap: 12px;
+}

@@ -60,7 +60,7 @@
     gap: 0.3rem;
     align-items: center;
     justify-items: center;
-    flex-direction: column;
+    flex-direction: flex-start;
     margin-bottom: 0.5rem;
     border-bottom: 2px solid #51db84;
     padding-bottom: 1.5rem;

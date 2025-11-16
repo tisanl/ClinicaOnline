@@ -20,12 +20,17 @@ export class SacarTurno implements OnInit {
   public profesionalSeleccionado: Usuario | null = null;
   public diaSeleccionado: number | null = null;
   public turnosSemanas: { fecha: Date; turnos: string[] }[] = [];
+  public pacientes: Usuario[] = [];
+  public pacienteSeleccionado: Usuario | null = null;
 
-  constructor(private u: UsuarioService, private sa: SweetAlertService, private he: HorariosEspecialistaService, private e: EspecialidadesService, private t: TurnosService) { }
+  constructor(public u: UsuarioService, private sa: SweetAlertService, private he: HorariosEspecialistaService, private e: EspecialidadesService, private t: TurnosService) { }
 
   async ngOnInit() {
     this.sa.showLoading();
     this.especialidades = await this.e.obtenerEspecialidades();
+
+    if (this.u.userData!.perfil === 'admin')
+      this.pacientes = await this.u.obtenerUsuariosPacientes();
 
     this.sa.closeLoading();
   }
@@ -34,6 +39,9 @@ export class SacarTurno implements OnInit {
     console.log(e.nombre)
     this.sa.showLoading();
     this.especialidadSeleccionada = e;
+    this.profesionalSeleccionado = null;
+    this.pacienteSeleccionado = null;
+    this.diaSeleccionado = null;
     this.profesionales = await this.u.obtenerUsuariosEspecialistasPorEspecialidad(this.especialidadSeleccionada.id);
     this.sa.closeLoading();
   }
@@ -45,7 +53,18 @@ export class SacarTurno implements OnInit {
     this.sa.closeLoading();
   }
 
+  async seleccionarPaciente(u: Usuario) {
+    console.log(u.nombre)
+    this.pacienteSeleccionado = u;
+    this.diaSeleccionado = null;
+  }
+
   async seleccionarDia(he: HorarioEspecialista) {
+    if(this.u.userData!.perfil === 'admin' && !this.pacienteSeleccionado){
+      await this.sa.showAlertError('Paciente', 'Primero selecciona un paciente')
+      return
+    }
+
     console.log('Día seleccionado:', he.dia_semana);
     this.sa.showLoading();
     this.diaSeleccionado = he.dia_semana;
@@ -69,9 +88,15 @@ export class SacarTurno implements OnInit {
       return turnos;
     };
 
+    const ocupadosProfesional = await this.t.obtenerTurnosProx15Dias(this.profesionalSeleccionado!.id, 'especialista');
+    const ocupadosPaciente = this.u.userData!.perfil === 'admin' ? await this.t.obtenerTurnosProx15Dias(this.pacienteSeleccionado!.id, 'paciente') : [];
+
     this.turnosSemanas = fechas.slice(0, 2).map(fecha => ({
       fecha,
       turnos: generarTurnos(Number(he.hora_inicio), Number(he.hora_fin))
+        .filter(t =>
+          !ocupadosProfesional.some(o => o.dia === fecha.toISOString().slice(0, 10) && o.hora === t + ':00') &&
+          !ocupadosPaciente.some(o => o.dia === fecha.toISOString().slice(0, 10) && o.hora === t + ':00'))
     }));
 
     console.log(this.turnosSemanas);
@@ -88,10 +113,12 @@ export class SacarTurno implements OnInit {
 
     this.sa.showLoading();
 
+    const pacienteId = this.u.userData!.perfil === 'admin' ? this.pacienteSeleccionado!.id : this.u.userId;
+
     const nuevoTurno: TurnoNuevo = {
       dia: fecha,
       hora,
-      id_paciente: this.u.userId!,
+      id_paciente: pacienteId,
       id_especialista: this.profesionalSeleccionado!.id,
       id_especialidad: this.especialidadSeleccionada!.id,
       estado: 'pendiente',

@@ -1,0 +1,212 @@
+<main class="historia-clinica-modal">
+    <h2 mat-dialog-title>Historia Clinica</h2>
+    <mat-dialog-content>Preguntas base</mat-dialog-content>
+
+    <mat-dialog-content class="preguntas" [formGroup]="formBase">
+        <mat-form-field appearance="outline">
+            <mat-label>Altura</mat-label>
+            <input matInput formControlName="altura" />
+            @if (altura!.invalid && altura!.touched) {
+            <mat-error>Este campo es obligatorio</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Peso</mat-label>
+            <input matInput formControlName="peso" />
+            @if (peso!.invalid && peso!.touched) {
+            <mat-error>Este campo es obligatorio</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Temperatura</mat-label>
+            <input matInput formControlName="temperatura" />
+            @if (temperatura!.invalid && temperatura!.touched) {
+            <mat-error>Este campo es obligatorio</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Presión</mat-label>
+            <input matInput formControlName="presion" />
+            @if (presion!.invalid && presion!.touched) {
+            <mat-error>Este campo es obligatorio</mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-content>Datos dinamicos</mat-dialog-content>
+
+    <mat-dialog-content class="preguntas" [formGroup]="claveValor1">
+        <mat-form-field appearance="outline">
+            <mat-label>Clave 1</mat-label>
+            <input matInput formControlName="clave" />
+            @if (clave1!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (clave1?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Valor 1</mat-label>
+            <input matInput formControlName="valor" />
+            @if (valor1!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (valor1?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-content class="preguntas" [formGroup]="claveValor2">
+        <mat-form-field appearance="outline">
+            <mat-label>Clave 2</mat-label>
+            <input matInput formControlName="clave" />
+            @if (clave2!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (clave2?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Valor 2</mat-label>
+            <input matInput formControlName="valor" />
+            @if (valor2!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (valor2?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-content class="preguntas" [formGroup]="claveValor2">
+        <mat-form-field appearance="outline">
+            <mat-label>Clave 2</mat-label>
+            <input matInput formControlName="clave" />
+            @if (clave2!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (clave2?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Valor 2</mat-label>
+            <input matInput formControlName="valor" />
+            @if (valor2!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (valor2?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-content class="preguntas" [formGroup]="claveValor3">
+        <mat-form-field appearance="outline">
+            <mat-label>Clave 3</mat-label>
+            <input matInput formControlName="clave" />
+            @if (clave3!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (clave3?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Valor 3</mat-label>
+            <input matInput formControlName="valor" />
+            @if (valor3!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (valor3?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-content class="preguntas" [formGroup]="claveValor4">
+        <mat-form-field appearance="outline">
+            <mat-label>Clave 4</mat-label>
+            <input matInput formControlName="clave" />
+            @if (clave4!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (clave4?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Valor 4</mat-label>
+            <input matInput formControlName="valor" />
+            @if (valor4!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (valor4?.invalid) {
+            <mat-error>Numero del 1 al 100</mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-content class="preguntas" [formGroup]="claveValor5">
+        <mat-form-field appearance="outline">
+            <mat-label>Clave 5</mat-label>
+            <input matInput formControlName="clave" />
+            @if (clave5!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (clave5?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Valor 5</mat-label>
+            <input matInput formControlName="valor" />
+            @if (valor5!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (valor5?.invalid) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-content class="preguntas" [formGroup]="claveValor6">
+        <mat-form-field appearance="outline">
+            <mat-label>Clave 6</mat-label>
+            <input matInput formControlName="clave" />
+            @if (clave6!.hasError('campoVacio')) {
+            <mat-error>Completar ambos campos</mat-error>
+            }
+            @if (clave6!.hasError('respuestaNoValida')) {
+            <mat-error>Solo letras</mat-error>
+            }
+        </mat-form-field>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <mat-label>Valor 6</mat-label>
+            <mat-slide-toggle formControlName="valor"></mat-slide-toggle>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="acciones">
+        <button matButton="tonal" (click)="cancelar()">
+            Cancelar
+        </button>
+
+        <button matButton="filled" (click)="aceptar()">
+            Aceptar
+        </button>
+    </mat-dialog-actions>
+
+</main>

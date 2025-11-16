@@ -1,52 +1,244 @@
 <main class="card-container">
     <h2 class="titulo">Mis Turnos</h2>
 
-    <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Especialidades -->
+    <h6 class="titulo">Especialidades</h6>
+    <mat-chip-listbox multiple (change)="filtrarEspecialidades($event)">
+        @for (esp of especialidadesFiltro; track esp.id) {
+        <mat-chip-option [value]="esp.id" selected>
+            {{ esp.nombre }}
+        </mat-chip-option>
+        }
+    </mat-chip-listbox>
+
+    <!-- Especialistas -->
+    @if(perfil !== 'especialista'){
+    <h6 class="titulo">Especialistas</h6>
+    <mat-chip-listbox multiple (change)="filtrarEspecialistas($event)">
+        @for (esp of especialistasFiltro; track esp.id) {
+        <mat-chip-option [value]="esp.id" selected>
+            <img [src]="esp.imagen_1_path" width="26" height="26" style="border-radius:50%; margin-right:8px;">
+            {{ esp.nombre }} {{ esp.apellido }}
+        </mat-chip-option>
+        }
+    </mat-chip-listbox>
+    }
+
+    <!-- Pacientes -->
+    @if(perfil !== 'paciente'){
+    <h6 class="titulo">Pacientes</h6>
+    <mat-chip-listbox multiple (change)="filtrarPacientes($event)">
+        @for (paciente of pacientesFiltro; track paciente.id) {
+        <mat-chip-option [value]="paciente.id" selected>
+            <img [src]="paciente.imagen_1_path" width="26" height="26" style="border-radius:50%; margin-right:8px;">
+            {{ paciente.nombre }} {{ paciente.apellido }}
+        </mat-chip-option>
+        }
+    </mat-chip-listbox>
+    }
+
+    <!-- Filtro -->
+    <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input matInput autoselectInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+
+
+    <!-- Tabla -->
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
 
         <!-- Especialidad -->
         <ng-container matColumnDef="especialidad">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Especialidad</th>
-            <td mat-cell *matCellDef="let t">
-                {{ t.especialidades?.nombre }}
-            </td>
+            <td mat-cell *matCellDef="let t"> {{ t.especialidad?.nombre }} </td>
         </ng-container>
 
         <!-- Especialista -->
         <ng-container matColumnDef="especialista">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Especialista</th>
-            <td mat-cell *matCellDef="let t">
-                {{ t.id_especialista?.apellido }} {{ t.id_especialista?.nombre }}
-            </td>
+            <td mat-cell *matCellDef="let t"> {{ t.especialista | nombreCompleto }} </td>
         </ng-container>
 
         <!-- Paciente -->
         <ng-container matColumnDef="paciente">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Paciente</th>
-            <td mat-cell *matCellDef="let t">
-                {{ t.id_paciente?.apellido }} {{ t.id_paciente?.nombre }}
-            </td>
+            <td mat-cell *matCellDef="let t"> {{ t.paciente | nombreCompleto }} </td>
         </ng-container>
 
         <!-- Fecha -->
         <ng-container matColumnDef="dia">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
-            <td mat-cell *matCellDef="let t">
-                {{ t.dia | date: 'dd/MM/yyyy' }}
-            </td>
+            <td mat-cell *matCellDef="let t"> {{ t | diaHoraTurno }} </td>
+        </ng-container>
+
+        <!-- Estado -->
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+            <td mat-cell *matCellDef="let t"> {{ t.estado | capitalizeAll }} </td>
         </ng-container>
 
         <!-- Acciones -->
+        <!-- Columna Acciones -->
         <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let t">
-                <button mat-button color="primary" (click)="verDetalle(t)">Ver</button>
-                <button mat-button color="warn" (click)="cancelarTurno(t)">Cancelar</button>
+                <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #menu="matMenu">
+                    <!-- Cancelar: pendiente o aceptado (cualquier perfil) -->
+                    <button mat-menu-item *accionTurno="{ accion: 'cancelar', perfil: perfil, turno: t }"
+                        (click)="cancelarTurno(t)">
+                        <mat-icon>cancel</mat-icon>
+                        <span>Cancelar</span>
+                    </button>
+
+                    <!-- Aceptar: especialista, pendiente -->
+                    <button mat-menu-item *accionTurno="{ accion: 'aceptar', perfil: perfil, turno: t }"
+                        (click)="aceptarTurno(t)">
+                        <mat-icon>check_circle</mat-icon>
+                        <span>Aceptar</span>
+                    </button>
+
+                    <!-- Rechazar: especialista, pendiente -->
+                    <button mat-menu-item *accionTurno="{ accion: 'rechazar', perfil: perfil, turno: t }"
+                        (click)="rechazarTurno(t)">
+                        <mat-icon>block</mat-icon>
+                        <span>Rechazar</span>
+                    </button>
+
+                    <!-- Finalizar: especialista, aceptado -->
+                    <button mat-menu-item *accionTurno="{ accion: 'finalizar', perfil: perfil, turno: t }"
+                        (click)="finalizarTurno(t)">
+                        <mat-icon>check</mat-icon>
+                        <span>Finalizar</span>
+                    </button>
+
+                    <!-- Calificar atención: paciente, finalizado -->
+                    <button mat-menu-item *accionTurno="{ accion: 'calificarAtencion', perfil: perfil, turno: t }"
+                        (click)="calificarAtencion(t)">
+                        <mat-icon>thumb_up</mat-icon>
+                        <span>Calificar atención</span>
+                    </button>
+
+                    <!-- Responder encuesta: paciente, finalizado, sin encuesta, con reseña -->
+                    <button mat-menu-item *accionTurno="{ accion: 'responderEncuesta', perfil: perfil, turno: t }"
+                        (click)="responderEncuesta(t)">
+                        <mat-icon>assignment</mat-icon>
+                        <span>Responder encuesta</span>
+                    </button>
+
+                    <!-- Sin acciones disponibles -->
+                    <div class="no-opcion" style="padding: 12px; opacity: 0.7;"
+                        *accionTurno="{ accion: 'sinAcciones', perfil: perfil, turno: t }">
+                        No hay acciones disponible
+                    </div>
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <!-- Expandida -->
+        <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <!-- Pone el header vacio pero crea el espacio -->
+            <td mat-cell *matCellDef="let element">
+                <button matIconButton aria-label="expand row" (click)="toggle(element); $event.stopPropagation()"
+                    class="toggle-button" [class.toggle-button-expanded]="isExpanded(element)">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let t" [attr.colspan]="columnsToDisplayWithExpand.length"
+                class="fila-expandida-color">
+                <div class="detalle-wrapper" [class.detalle-wrapper-expanded]="isExpanded(t)">
+                    <div class="detalle">
+                        <!-- Pendiente -->
+                        @if (t.estado === 'pendiente') {
+                        <div class="detalle-item">
+                            <span>Esperando que el especialista confirme el turno.</span>
+                        </div>
+                        }
+
+                        <!-- Aceptado -->
+                        @if (t.estado === 'aceptado') {
+                        <div class="detalle-item">
+                            <span>Turno esta confirmado. La cita esta pactada en el dia y hora indicado.</span>
+                        </div>
+                        }
+
+                        <!-- Cancelado -->
+                        @if (t.estado === 'cancelado') {
+                        <div class="detalle-item">
+                            <strong>Motivo de cancelación: </strong>
+                            <span>{{ t.motivo_cancelacion | capitalizeAll }}</span>
+                        </div>
+                        }
+
+                        <!-- Rechazado -->
+                        @if (t.estado === 'rechazado') {
+                        <div class="detalle-item">
+                            <strong>Motivo de rechazo: </strong>
+                            <span>{{ t.motivo_rechazo | capitalizeAll }}</span>
+                        </div>
+                        }
+
+                        <!-- Finalizado -->
+                        @if (t.estado === 'finalizado') {
+                            <!-- Reseña -->
+                            @if (t.resena){
+                                <div class="detalle-item">
+                                    <strong>Reseña del especialista: </strong>
+                                    <span>{{ t.resena | capitalizeAll }}</span>
+                                </div>
+                            }
+
+                            <!-- Calificar Atencion -->
+                            @if (t.calificar_atencion){
+                                <div class="detalle-item">
+                                    <strong>Calificacion del paciente: </strong>
+                                    <span>{{ t.calificar_atencion | capitalizeAll }}</span>
+                                </div>
+                            }
+
+                            <!-- Enuesta -->
+                            @if (t.encuesta) {
+                            <strong>Encuesta: </strong>
+
+                            <div>
+                                <span class="detalle-subtitulo">Día realizado: </span>
+                                <span class="detalle-valor">{{ t.encuesta.created_at | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </div>
+
+                            <div>
+                                <span class="detalle-subtitulo">Atención del especialista: </span>
+                                <span class="detalle-valor">{{ t.encuesta.atencion | capitalizeAll }}</span>
+                            </div>
+
+                            <div>
+                                <span class="detalle-subtitulo">Puntualidad: </span>
+                                <span class="detalle-valor">{{ t.encuesta.puntualidad | capitalizeAll }}</span>
+                            </div>
+
+                            <div>
+                                <span class="detalle-subtitulo">Resolución del turno: </span>
+                                <span class="detalle-valor">{{ t.encuesta.resolucion | capitalizeAll }}</span>
+                            </div>
+                            }
+                        }
+                    </div>
+                </div>
             </td>
         </ng-container>
 
         <!-- Header y Filas -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" [pintarEstadoTurno]="element.estado">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 
     </table>
 </main>

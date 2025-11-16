@@ -23,7 +23,7 @@
         </div>
         }
 
-        @if (userData?.perfil === 'paciente') {
+        @if (userData?.perfil !== 'especialista') {
         <div class="home-card" (click)="goTo('sacar-turno')">
             <mat-icon>medical_services</mat-icon>
             <h2 class="sub-titulo">Sacar un Turno</h2>

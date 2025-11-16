@@ -13,9 +13,46 @@
             density: 0,
         ));
 
-    @include mat.table-overrides((
-            background-color: var(--c-primary-dark),
+    @include mat.table-overrides((background-color: var(--c-primary-dark),
             header-headline-color: var(--c-accent),
             row-item-label-text-color: var(--c-primary-light),
         ));
+}
+
+.encuesta-modal {
+    @include mat.button-overrides((filled-container-color: #2e7d32, // Aceptar → verde
+            filled-hover-state-layer-opacity: 0.30,
+            filled-label-text-color: #ffffff,
+
+            tonal-container-color: #e97a7a,
+            tonal-label-text-color: #ffffff,
+            tonal-hover-state-layer-opacity: 0.30,
+        ));
+}
+
+
+.historia-clinica-modal {
+    @include mat.button-overrides((filled-container-color: #2e7d32, // Aceptar → verde
+            filled-hover-state-layer-opacity: 0.30,
+            filled-label-text-color: #ffffff,
+
+            tonal-container-color: #e97a7a,
+            tonal-label-text-color: #ffffff,
+            tonal-hover-state-layer-opacity: 0.30,
+        ));
+
+    @include mat.form-field-overrides(( // Altura general del campo
+            container-height: 40px,
+            container-vertical-padding: 10px,
+
+            // Texto dentro del input
+            container-text-size: 0.80rem,
+            container-text-line-height: 1.2,
+            container-text-weight: 400,
+
+            // Label (para outlined / filled)
+            outlined-label-text-size: 0.75rem,
+            outlined-label-text-weight: 400,
+            filled-label-text-size: 0.75rem,
+            filled-label-text-weight: 400));
 }
