@@ -49,6 +49,11 @@ export const routes: Routes = [
         canMatch: [perfilGuard],
         data: { perfiles: ['especialista'] },
     },
+    { path: 'informes', loadComponent: () =>
+        import('./components/informes/informes').then(c => c.Informes),
+        canMatch: [perfilGuard],
+        data: { perfiles: ['admin'] },
+    },
     { path: '**', loadComponent: () =>
         import('./components/landing-page/landing-page').then(c => c.LandingPage),
     },

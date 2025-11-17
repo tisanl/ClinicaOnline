@@ -156,4 +156,64 @@ export class PdfService {
 
     this.descargarPdf(pdf, 'historia-clinica');
   }
+
+  async agregarContenidoLogs(pdf: jsPDF, logs: any[], yInicio: number): Promise<number> {
+    const marginLeft = 20;
+    const bottomMargin = 20;
+    const lineHeight = 6;
+
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    let y = yInicio;
+
+    const ensureSpace = async (lines: number = 1) => {
+      if (y + lines * lineHeight > pageHeight - bottomMargin) {
+        pdf.addPage();
+        const { nextY } = await this.agregarEncabezado(pdf, 'Log de ingresos');
+        y = nextY;
+      }
+    };
+
+    // encabezados de tabla
+    await ensureSpace(1);
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(11);
+
+    pdf.text('Usuario', marginLeft, y);
+    pdf.text('Mail', marginLeft + 40, y);
+    pdf.text('Perfil', marginLeft + 100, y);
+    pdf.text('Ingreso', marginLeft + 130, y);
+
+    y += lineHeight;
+    pdf.setFont('helvetica', 'normal');
+
+    // contenido
+    for (const log of logs) {
+      const usuario = `${log.usuario.apellido} ${log.usuario.nombre}`;
+      const mail = log.usuario.email;
+      const perfil = (log.usuario.perfil ?? '').charAt(0).toUpperCase() + (log.usuario.perfil ?? '').slice(1).toLowerCase();
+      const fecha = new Date(log.created_at).toLocaleString('es-AR');
+
+      await ensureSpace(1);
+
+      pdf.text(usuario, marginLeft, y);
+      pdf.text(mail, marginLeft + 40, y);
+      pdf.text(perfil, marginLeft + 100, y);
+      pdf.text(fecha, marginLeft + 130, y);
+
+      y += lineHeight;
+    }
+
+    return y;
+  }
+
+
+  async descargarLogs(logs: any[]) {
+    const pdf = this.crearPdfVacio();
+
+    const { nextY } = await this.agregarEncabezado(pdf, 'Log de ingresos');
+
+    await this.agregarContenidoLogs(pdf, logs, nextY);
+
+    this.descargarPdf(pdf, 'log-ingresos');
+  }
 }

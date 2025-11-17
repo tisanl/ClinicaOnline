@@ -25,4 +25,19 @@ export class LogService {
 
     return data;
   }
+
+  async obtenerTodos() {
+    const { data, error } = await this.db.cliente
+      .from('log_usuarios')
+      .select(`
+        *,
+        usuario:id_usuario(*)
+      `)
+      .order('created_at', { ascending: true });
+
+    if (error)
+      throw new Error(error.message);
+
+    return data;
+  }
 }

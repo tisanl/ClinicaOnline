@@ -1,0 +1,21 @@
+.tabs {
+    background-color: white;
+}
+
+.tabla-logs {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    /* espacio entre filas */
+}
+
+.tabla-logs th {
+    padding: 8px 12px;
+    /* espacio interno en encabezados */
+    text-align: left;
+}
+
+.tabla-logs td {
+    padding: 8px 12px;
+    /* espacio interno en celdas */
+}

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase-service';
 import { Usuario } from './usuario-service';
 import { HistoriaClinica } from './historias-clinicas-service';
+import { Especialidad } from './especialidades-service';
 
 export interface Turno {
   id: string | null;
@@ -254,4 +255,48 @@ export class TurnosService {
     return data ?? [];
   }
 
+  async obtenerCantidadTurnosPorEspecialidad(): Promise<{ nombre: string; cantidad: number }[]> {
+    const { data, error } = await this.db.cliente
+      .from('turnos')
+      .select(`especialidad:especialidades ( * )`)
+      .eq('estado', 'finalizado');
+
+    if (error)
+      throw new Error(error.message);
+
+    const lista = data as any[];
+    const conteo = new Map<string, number>();
+
+    for (const t of lista ?? []) {
+      const nombre = t.especialidad!.nombre;
+      conteo.set(nombre, (conteo.get(nombre) ?? 0) + 1);
+    }
+
+    return Array.from(conteo, ([nombre, cantidad]) => ({ nombre, cantidad }));
+  }
+
+  async obtenerCantidadTurnosPorDia(): Promise<{ dia: string; cantidad: number }[]> {
+    const { data, error } = await this.db.cliente
+      .from('turnos')
+      .select('dia')
+      .eq('estado', 'finalizado')
+      .order('dia', { ascending: true });
+
+    if (error)
+      throw new Error(error.message);
+
+    const lista = data as any[];
+    const conteo = new Map<string, number>();
+
+    for (const t of lista ?? []) {
+      const dia = t.dia as string;
+      conteo.set(dia, (conteo.get(dia) ?? 0) + 1);
+    }
+
+    return Array.from(conteo, ([dia, cantidad]) => {
+      const d = new Date(dia);
+      const diaTxt = `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+      return { dia: diaTxt, cantidad };
+    });
+  }
 }

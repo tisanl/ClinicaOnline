@@ -17,6 +17,9 @@
             header-headline-color: var(--c-accent),
             row-item-label-text-color: var(--c-primary-light),
         ));
+
+    @include mat.tabs-overrides((background-color: #ffffff,
+        ));
 }
 
 .encuesta-modal {
