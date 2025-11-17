@@ -3,45 +3,35 @@ import { CommonModule } from '@angular/common';
 import { UsuarioService, Usuario } from '../../services/usuario-service';
 import { SweetAlertService } from '../../services/sweet-alert-service';
 import { TurnosService } from '../../services/turnos-service';
+import { VerHistoriaClinicaModal } from '../ver-historia-clinica-modal/ver-historia-clinica-modal';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { VerHistoriaClinicaModal } from '../ver-historia-clinica-modal/ver-historia-clinica-modal';
 
 @Component({
-  selector: 'app-usuarios',
+  selector: 'app-mis-pacientes',
   imports: [CommonModule, MatButtonModule],
-  templateUrl: './usuarios.html',
-  styleUrl: './usuarios.css',
+  templateUrl: './mis-pacientes.html',
+  styleUrl: './mis-pacientes.css',
 })
-export class Usuarios implements OnInit {
+export class MisPacientes implements OnInit {
   public usuarios: Usuario[] = [];
 
   constructor(private u: UsuarioService, private sa: SweetAlertService, private t: TurnosService, private dialog: MatDialog) { }
 
   async ngOnInit() {
     this.sa.showLoading();
-    this.usuarios = await this.u.obtenerUsuarios();
+    this.usuarios = await this.t.obtenerPacientesDeEspecialista(this.u.userId!);
     console.log(this.usuarios)
     this.sa.closeLoading();
   }
 
-  async cambiarEstado(id: string, estado: string) {
-    this.sa.showLoading();
-    await this.u.modificarEstadoUsuario(id, estado);
-
-    const usuario = this.usuarios.find(u => u.id === id);
-    if (usuario) usuario.estado = estado;
-
-    this.sa.closeLoading();
-  }
-
   async verHistoriaClinica(usuarioId: string) {
-      this.sa.showLoading();
-      const turnos = await this.t.obtenerTurnosFinalizadosPaciente(usuarioId);
-      this.sa.closeLoading();
-      console.log(turnos)
-      const dialogRef = this.dialog.open(VerHistoriaClinicaModal, { data: { turnos: turnos } });
-    }
+    this.sa.showLoading();
+    const turnos = await this.t.obtenerTurnosFinalizadosPaciente(usuarioId);
+    this.sa.closeLoading();
+    console.log(turnos)
+    const dialogRef = this.dialog.open(VerHistoriaClinicaModal, { data: { turnos: turnos } });
+  }
 
   capitalizar(texto: string) {
     return texto[0].toUpperCase() + texto.slice(1).toLowerCase();

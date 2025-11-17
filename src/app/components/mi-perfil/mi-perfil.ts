@@ -4,10 +4,14 @@ import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule, F
 import { UsuarioService, Usuario } from '../../services/usuario-service';
 import { SweetAlertService } from '../../services/sweet-alert-service';
 import { HorariosEspecialistaService, HorarioEspecialista } from '../../services/horarios-especialista-service';
+import { TurnosService } from '../../services/turnos-service';
+import { MatDialog } from '@angular/material/dialog';
+import { VerHistoriaClinicaModal } from '../ver-historia-clinica-modal/ver-historia-clinica-modal';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-mi-perfil',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatButtonModule],
   templateUrl: './mi-perfil.html',
   styleUrl: './mi-perfil.css',
 })
@@ -15,7 +19,7 @@ export class MiPerfil implements OnInit {
   public usuario: Usuario | null = null;
   horariosForm!: FormGroup;
 
-  constructor(private u: UsuarioService, private sa: SweetAlertService, private he: HorariosEspecialistaService) { }
+  constructor(private u: UsuarioService, private sa: SweetAlertService, private he: HorariosEspecialistaService, private t: TurnosService, private dialog: MatDialog) { }
 
   async ngOnInit() {
     this.sa.showLoading();
@@ -94,5 +98,13 @@ export class MiPerfil implements OnInit {
       'Sábado'
     ];
     return dias[dia] ?? '';
+  }
+
+  async verHistoriaClinica() {
+    this.sa.showLoading();
+    const turnos = await this.t.obtenerTurnosFinalizadosPaciente(this.u.userId!);
+    this.sa.closeLoading();
+    console.log(turnos)
+    const dialogRef = this.dialog.open(VerHistoriaClinicaModal, { data: { turnos: turnos } });
   }
 }

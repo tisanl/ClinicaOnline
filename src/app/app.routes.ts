@@ -44,6 +44,11 @@ export const routes: Routes = [
         import('./components/mis-turnos/mis-turnos').then(c => c.MisTurnos),
         canMatch: [noSessionGuard],
     },
+    { path: 'mis-pacientes', loadComponent: () =>
+        import('./components/mis-pacientes/mis-pacientes').then(c => c.MisPacientes),
+        canMatch: [perfilGuard],
+        data: { perfiles: ['especialista'] },
+    },
     { path: '**', loadComponent: () =>
         import('./components/landing-page/landing-page').then(c => c.LandingPage),
     },

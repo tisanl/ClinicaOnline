@@ -68,12 +68,20 @@
                 </div>
 
                 <div class="especialista-botones">
-                    <button class="btn-1" (click)="guardarHorarios()" [ngClass]="{ 'deshabilitado': horariosForm.dirty === false }">
+                    <button class="btn-1" (click)="guardarHorarios()"
+                        [ngClass]="{ 'deshabilitado': horariosForm.dirty === false }">
                         Guardar cambios
                     </button>
                 </div>
             </form>
         </div>
+    </div>
+    }
+
+    @if (usuario!.perfil === 'paciente') {
+    <div>
+        <button matButton="filled" (click)="verHistoriaClinica()"
+            style="min-width: 40px; max-width: 255px; height: 40px;">Ver Mi Historia Clinica</button>
     </div>
     }
 </main>

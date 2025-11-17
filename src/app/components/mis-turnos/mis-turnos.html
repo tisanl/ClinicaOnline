@@ -188,46 +188,52 @@
 
                         <!-- Finalizado -->
                         @if (t.estado === 'finalizado') {
-                            <!-- Reseña -->
-                            @if (t.resena){
-                                <div class="detalle-item">
-                                    <strong>Reseña del especialista: </strong>
-                                    <span>{{ t.resena | capitalizeAll }}</span>
-                                </div>
-                            }
+                        <!-- Reseña -->
+                        @if (t.resena){
+                        <div class="detalle-item">
+                            <strong>Reseña del especialista: </strong>
+                            <span>{{ t.resena | capitalizeAll }}</span>
+                        </div>
+                        }
 
-                            <!-- Calificar Atencion -->
-                            @if (t.calificar_atencion){
-                                <div class="detalle-item">
-                                    <strong>Calificacion del paciente: </strong>
-                                    <span>{{ t.calificar_atencion | capitalizeAll }}</span>
-                                </div>
-                            }
+                        <!-- Calificar Atencion -->
+                        @if (t.calificar_atencion){
+                        <div class="detalle-item">
+                            <strong>Calificacion del paciente: </strong>
+                            <span>{{ t.calificar_atencion | capitalizeAll }}</span>
+                        </div>
+                        }
 
-                            <!-- Enuesta -->
-                            @if (t.encuesta) {
-                            <strong>Encuesta: </strong>
+                        <!-- Enuesta -->
+                        @if (t.encuesta) {
+                        <strong>Encuesta: </strong>
 
-                            <div>
-                                <span class="detalle-subtitulo">Día realizado: </span>
-                                <span class="detalle-valor">{{ t.encuesta.created_at | date:'dd/MM/yyyy HH:mm' }}</span>
-                            </div>
+                        <div>
+                            <span class="detalle-subtitulo">Día realizado: </span>
+                            <span class="detalle-valor">{{ t.encuesta.created_at | date:'dd/MM/yyyy HH:mm' }}</span>
+                        </div>
 
-                            <div>
-                                <span class="detalle-subtitulo">Atención del especialista: </span>
-                                <span class="detalle-valor">{{ t.encuesta.atencion | capitalizeAll }}</span>
-                            </div>
+                        <div>
+                            <span class="detalle-subtitulo">Atención del especialista: </span>
+                            <span class="detalle-valor">{{ t.encuesta.atencion | capitalizeAll }}</span>
+                        </div>
 
-                            <div>
-                                <span class="detalle-subtitulo">Puntualidad: </span>
-                                <span class="detalle-valor">{{ t.encuesta.puntualidad | capitalizeAll }}</span>
-                            </div>
+                        <div>
+                            <span class="detalle-subtitulo">Puntualidad: </span>
+                            <span class="detalle-valor">{{ t.encuesta.puntualidad | capitalizeAll }}</span>
+                        </div>
 
-                            <div>
-                                <span class="detalle-subtitulo">Resolución del turno: </span>
-                                <span class="detalle-valor">{{ t.encuesta.resolucion | capitalizeAll }}</span>
-                            </div>
-                            }
+                        <div>
+                            <span class="detalle-subtitulo">Resolución del turno: </span>
+                            <span class="detalle-valor">{{ t.encuesta.resolucion | capitalizeAll }}</span>
+                        </div>
+                        }
+
+                        @if (t.historia_clinica){
+                        <button matButton = "text" (click)="verHistoriaClinica(t)"
+                            style="min-width: 40px; max-width: 200px; height: 40px; padding: 0px;">Ver Historia
+                            Clinica del Turno</button>
+                        }
                         }
                     </div>
                 </div>

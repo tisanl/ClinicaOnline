@@ -35,6 +35,14 @@
                 }
             </div>
             }
+
+            @if (u.perfil === 'paciente') {
+            <div>
+                <button matButton="filled" (click)="verHistoriaClinica(u.id)"
+                    style="min-width: 40px; max-width: 255px; height: 40px;">Ver Historia
+                    Clinica del Paciente</button>
+            </div>
+            }
         </div>
         }
     </div>

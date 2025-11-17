@@ -1,8 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
 import { NgStyle } from '@angular/common';
-import { UsuarioService } from './services/usuario-service'; 
+import { UsuarioService } from './services/usuario-service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,5 @@ import { UsuarioService } from './services/usuario-service';
 export class App {
   protected readonly title = signal('ClinicaOnline');
 
-  constructor(private u: UsuarioService) { 
-    //this.u.logout()
-  }
+  constructor(private u: UsuarioService) { }
 }

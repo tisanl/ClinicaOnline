@@ -21,6 +21,7 @@
             <h2 class="sub-titulo">Registrar un Administrador</h2>
             <p class="home-card-text">Formulario de registro de un administrador.</p>
         </div>
+        
         }
 
         @if (userData?.perfil !== 'especialista') {
@@ -31,6 +32,13 @@
         </div>
         }
 
+        @if (userData?.perfil === 'especialista') {
+        <div class="home-card" (click)="goTo('mis-pacientes')">
+            <mat-icon>personal_injury</mat-icon>
+            <h2 class="sub-titulo">Mis pacientes</h2>
+            <p class="home-card-text">Ver pacientes que atendi al menos una vez.</p>
+        </div>
+        }
         
         <div class="home-card" (click)="goTo('mis-turnos')">
             <mat-icon>event_available</mat-icon>

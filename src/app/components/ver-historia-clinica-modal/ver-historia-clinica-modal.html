@@ -1,0 +1,51 @@
+<main class="ver-historia-clinica-modal">
+    <h2 mat-dialog-title>Historia Clinica</h2>
+    <mat-dialog-content>
+        @for (t of turnos; track t.id) {
+        <div class="turno">
+            <h4>Dia: {{ t | diaHoraTurno }}</h4>
+            <div><strong>Paciente: </strong> <span>{{ t.paciente | nombreCompleto }}</span></div>
+            <div><strong>Especialista: </strong> <span>{{ t.especialista | nombreCompleto }}</span></div>
+            <div><strong>Especialidad: </strong> <span>{{ t.especialidad.nombre }}</span></div>
+
+            <h6 class="titulo-historia-clinica">Datos de la consulta</h6>
+            <div class="historia-clinica">
+                <div><strong>Altura: </strong><span>{{ t.historia_clinica.altura }}</span></div>
+                <div><strong>Peso: </strong><span>{{ t.historia_clinica.peso }}</span></div>
+                <div><strong>Temperatura: </strong><span>{{ t.historia_clinica.temperatura }}</span></div>
+                <div><strong>Presión: </strong><span>{{ t.historia_clinica.presion }}</span></div>
+
+                <div class="campos-dinamicos">
+                    @for (campo of t.historia_clinica.campos_dinamicos; track campo.clave) {
+                    @if (campo.clave !== ''){
+                    <div class="campo-dinamico">
+                        <strong>{{ campo.clave }}: </strong>
+                        @if (campo.valor === true) {
+                        <span>✔️</span>
+                        }
+                        @else if (campo.valor === false) {
+                        <span>✖️</span>
+                        }
+                        @else {
+                        <span>{{ campo.valor }}</span>
+                        }
+                    </div>
+                    }
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="acciones">
+        <button matButton="tonal" (click)="cerrar()">
+            Cerrar
+        </button>
+
+        <button matButton="filled" (click)="descargarPdf()">
+            Descargar Pdf
+        </button>
+    </mat-dialog-actions>
+
+</main>

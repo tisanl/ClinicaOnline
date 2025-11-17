@@ -86,30 +86,6 @@
         </mat-form-field>
     </mat-dialog-content>
 
-    <mat-dialog-content class="preguntas" [formGroup]="claveValor2">
-        <mat-form-field appearance="outline">
-            <mat-label>Clave 2</mat-label>
-            <input matInput formControlName="clave" />
-            @if (clave2!.hasError('campoVacio')) {
-            <mat-error>Completar ambos campos</mat-error>
-            }
-            @if (clave2?.invalid) {
-            <mat-error>Solo letras</mat-error>
-            }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Valor 2</mat-label>
-            <input matInput formControlName="valor" />
-            @if (valor2!.hasError('campoVacio')) {
-            <mat-error>Completar ambos campos</mat-error>
-            }
-            @if (valor2?.invalid) {
-            <mat-error>Solo letras</mat-error>
-            }
-        </mat-form-field>
-    </mat-dialog-content>
-
     <mat-dialog-content class="preguntas" [formGroup]="claveValor3">
         <mat-form-field appearance="outline">
             <mat-label>Clave 3</mat-label>
@@ -177,7 +153,7 @@
             <mat-error>Completar ambos campos</mat-error>
             }
             @if (valor5?.invalid) {
-            <mat-error>Solo letras</mat-error>
+            <mat-error>Solo numros</mat-error>
             }
         </mat-form-field>
     </mat-dialog-content>

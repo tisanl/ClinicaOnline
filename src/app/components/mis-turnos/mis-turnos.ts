@@ -24,6 +24,7 @@ import { DiaHoraTurnoPipe } from '../../pipes/dia-hora-turno-pipe';
 import { AutoselectInput } from '../../directives/autoselect-input';
 import { PintarEstadoTurno } from '../../directives/pintar-estado-turno';
 import { AccionTurno } from '../../directives/accion-turno';
+import { VerHistoriaClinicaModal } from '../ver-historia-clinica-modal/ver-historia-clinica-modal';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -72,7 +73,7 @@ export class MisTurnos implements OnInit {
 
     // Defino el contenido de la tabla
     this.dataSource.data = this.turnos;
-    console.log(this.u.userData)
+    //console.log(this.u.userData)
 
     // Cargo especialidades de los turnos que traje
     await this.cargarEspecialidades()
@@ -231,7 +232,7 @@ export class MisTurnos implements OnInit {
       await this.t.actualizarTurnoFinalizado(turno.id!, 'finalizado', resena);
       this.sa.closeLoading();
       await this.sa.showAlertSuccess('Turno finalizado!', 'Tus comentarios y la historia clinica fueron guardados')
-      turno.estado = 'resena'
+      turno.estado = 'finalizado'
       turno.resena = resena
     });
   }
@@ -245,7 +246,6 @@ export class MisTurnos implements OnInit {
       await this.t.actualizarCalificarAtencion(turno.id, calificacion);
       this.sa.closeLoading();
       await this.sa.showAlertSuccess('Califiacion guardada!', 'Hemos recibido tus comentarios')
-      turno.estado = 'rechazado'
       turno.calificar_atencion = calificacion
     }
   }
@@ -263,6 +263,10 @@ export class MisTurnos implements OnInit {
     });
   }
 
+  verHistoriaClinica(t: any) {
+    const dialogRef = this.dialog.open(VerHistoriaClinicaModal, { height: '70%', data: { turnos: [t] } });
+  }
+
   async cargarEspecialidades() {
     for (const t of this.turnos) {
       const esp = t.especialidad;
@@ -271,7 +275,7 @@ export class MisTurnos implements OnInit {
       }
     }
     this.especialidadesSeleccionadas = this.especialidadesFiltro.map(e => e.id);
-    console.log(this.especialidadesFiltro)
+    //console.log(this.especialidadesFiltro)
   }
 
   filtrarEspecialidades(event: any) {
@@ -293,7 +297,7 @@ export class MisTurnos implements OnInit {
       }
     }
 
-    console.log(lista)
+    //console.log(lista)
     this.especialistasFiltro = lista;
     this.especialistasSeleccionadas = lista.map(e => e.id);
   }
@@ -317,7 +321,7 @@ export class MisTurnos implements OnInit {
       }
     }
 
-    console.log(lista)
+    //console.log(lista)
     this.pacientesFiltro = lista;
     this.pacientesSeleccionadas = lista.map(e => e.id);
   }

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase-service';
+import { Usuario } from './usuario-service';
+import { HistoriaClinica } from './historias-clinicas-service';
 
 export interface Turno {
   id: string | null;
@@ -62,6 +64,7 @@ export class TurnosService {
       *,
       especialidad:especialidades ( * ),
       especialista:id_especialista ( * ),
+      paciente:id_paciente ( * ),
       encuesta:id_encuesta (*),
       historia_clinica:id_historia_clinica (*)
     `)
@@ -75,6 +78,7 @@ export class TurnosService {
         .select(`
       *,
       especialidad:especialidades ( * ),
+      especialista:id_especialista ( * ),
       paciente:id_paciente ( * ),
       encuesta:id_encuesta (*),
       historia_clinica:id_historia_clinica (*)
@@ -178,7 +182,7 @@ export class TurnosService {
     hasta.setDate(hoy.getDate() + 15);
 
     let id = 'id_especialista'
-    if(perfil === 'paciente') id = 'id_paciente'
+    if (perfil === 'paciente') id = 'id_paciente'
 
     const { data, error } = await this.db.cliente
       .from('turnos')
@@ -188,6 +192,65 @@ export class TurnosService {
       .lte('dia', hasta.toISOString().slice(0, 10));
 
     if (error) throw new Error(error.message);
+    return data ?? [];
+  }
+
+  async obtenerPacientesDeEspecialista(especialistaId: string): Promise<Usuario[]> {
+    const { data, error } = await this.db.cliente
+      .from('turnos')
+      .select(`paciente:id_paciente ( * )`)
+      .eq('id_especialista', especialistaId)
+      .eq('estado', 'finalizado')
+      .order('dia', { ascending: false })
+      .order('hora', { ascending: true });
+
+    if (error) throw new Error(error.message);
+
+    const pacientesUnicos: Usuario[] = [];
+    const ids = new Set<string>();
+
+    for (const t of (data ?? []) as any[]) {
+      const p = t.paciente as Usuario | null;
+      if (p && !ids.has(p.id)) {
+        ids.add(p.id);
+
+        const pacienteConImagenes: Usuario = {
+          ...p,
+          imagen_1_path: p.imagen_1_path
+            ? this.db.cliente.storage.from('images').getPublicUrl(p.imagen_1_path).data.publicUrl
+            : null,
+          imagen_2_path: p.imagen_2_path
+            ? this.db.cliente.storage.from('images').getPublicUrl(p.imagen_2_path).data.publicUrl
+            : null,
+        };
+
+        pacientesUnicos.push(pacienteConImagenes);
+      }
+    }
+
+    return pacientesUnicos;
+  }
+
+  async obtenerTurnosFinalizadosPaciente(idPaciente: string): Promise<any[]> {
+    const { data, error } = await this.db.cliente
+      .from('turnos')
+      .select(`
+      *,
+      especialidad:especialidades ( * ),
+        paciente:id_paciente ( * ),
+        especialista:id_especialista ( * ),
+        historia_clinica:id_historia_clinica (*)
+    `)
+      .eq('id_paciente', idPaciente)
+      .eq('estado', 'finalizado')
+      .not('id_historia_clinica', 'is', null)
+      .order('dia', { ascending: true })
+      .order('hora', { ascending: true });
+
+    if (error)
+      throw new Error(error.message);
+
+
     return data ?? [];
   }
 

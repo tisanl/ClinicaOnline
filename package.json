@@ -32,6 +32,8 @@
     "@angular/router": "^20.2.0",
     "@supabase/supabase-js": "^2.78.0",
     "bootstrap": "^5.3.8",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.3",
     "ngx-toastr": "^19.1.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.26.3",

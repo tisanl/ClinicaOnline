@@ -1,0 +1,21 @@
+<main class="card-container ">
+    <h2 class="titulo">Mis Pacientes</h2>
+
+    <div class="lista-usuarios">
+        @for (u of usuarios; track u.id) {
+        <div class="usuario-item">
+            <img [src]="u.imagen_1_path" alt="{{ u.nombre }}" class="foto-usuario">
+            <h3>{{ u.nombre }} {{ u.apellido }}</h3>
+            <h5>{{ capitalizar(u.perfil) }}</h5>
+            <h5>{{ u.email }}</h5>
+
+            <div>
+                <button matButton="filled" (click)="verHistoriaClinica(u.id)"
+                    style="min-width: 40px; max-width: 255px; height: 40px;">Ver Historia
+                    Clinica del Paciente</button>
+            </div>
+
+        </div>
+        }
+    </div>
+</main>

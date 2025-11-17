@@ -5,11 +5,14 @@ import { User } from '@supabase/supabase-js';
 import { EspecialidadesService } from './especialidades-service';
 import { Especialidad } from './especialidades-service';
 import { HorarioEspecialista, HorariosEspecialistaService } from './horarios-especialista-service';
+import { LogService } from './log-service';
+import { SweetAlertService } from './sweet-alert-service';
 
 export interface UserData {
   nombre: string;
   apellido: string;
   perfil: string;
+  ultima_sesion: number | null;
 }
 
 export interface Usuario {
@@ -40,14 +43,35 @@ export class UsuarioService {
   private userSubject = new BehaviorSubject<User | null>(null);
   public userObservable = this.userSubject.asObservable();
 
-  constructor(private db: SupabaseService, private e: EspecialidadesService, private he: HorariosEspecialistaService) {
-    this.initAuth();
-  }
+  constructor(private db: SupabaseService, private e: EspecialidadesService, private he: HorariosEspecialistaService, private log: LogService, private sa: SweetAlertService) { }
 
   public async initAuth() {
     const { data: { session } } = await this.db.cliente.auth.getSession();
 
     this.userSubject.next(session?.user ?? null);
+
+    if (session) {
+      this.sa.showLoading()
+      let usuario = await this.obtenerUsuarioId(session.user.id)
+
+      const userData = new Object as UserData;
+      userData.nombre = usuario!.nombre
+      userData.apellido = usuario!.apellido
+      userData.perfil = usuario!.perfil
+
+      const last = session.user.user_metadata?.['ultima_sesion'] as number | undefined;
+      const ochoHoras = 8 * 60 * 60 * 1000;
+
+      if (!last || Date.now() - last >= ochoHoras) {
+        await this.log.insert(session.user.id);
+        userData.ultima_sesion = Date.now();
+      }
+      
+      console.log(session.user.user_metadata)
+      await this.db.cliente.auth.updateUser({ data: userData });
+    }
+
+    this.sa.closeLoading()
 
     return session?.user ?? null
   }
@@ -65,8 +89,7 @@ export class UsuarioService {
         throw new Error('Tu cuenta fue inhabilidata por un administrador.')
     }
 
-
-    const { data, error } = await this.db.cliente.auth.signInWithPassword({ email: email, password: password, });
+    const { data, error } = await this.db.cliente.auth.signInWithPassword({ email: email, password: password });
 
     if (error)
       switch (error.code) {
@@ -80,7 +103,25 @@ export class UsuarioService {
           throw new Error('Ha ocurrido un error.\nIntente de nuevo más tarde');
       }
 
-    if (data.user) this.userSubject.next(data.user);
+    if (data.user) {
+      this.userSubject.next(data.user);
+      let metadata
+      metadata = await this.obtenerUsuarioId(data.user.id)
+      const userData = new Object as UserData;
+      userData.nombre = metadata!.nombre
+      userData.apellido = metadata!.apellido
+      userData.perfil = metadata!.perfil
+
+      const last = data.user.user_metadata?.['ultima_sesion'] as number | undefined;
+      const ochoHoras = 8 * 60 * 60 * 1000;
+
+      if (!last || Date.now() - last >= ochoHoras) {
+        await this.log.insert(data.user.id);
+        userData.ultima_sesion = Date.now();
+      }
+
+      await this.db.cliente.auth.updateUser({ data: userData });
+    }
 
     return true
   }
@@ -135,10 +176,10 @@ export class UsuarioService {
     usuario.id = data.user!.id
     if (usuario.perfil == 'especialista') usuario.estado = 'pendiente_validacion'
     await this.guardarBD(usuario)
-    if (usuario.perfil == 'especialista'){
+    if (usuario.perfil == 'especialista') {
       await this.e.guardarEspecialidadesUsuario(usuario.id, usuario.lista_especialidades_id!)
       await this.he.crearHorariosBaseParaEspecialista(usuario.id)
-    } 
+    }
     return true
   }
 
@@ -204,6 +245,18 @@ export class UsuarioService {
       return this.user.email!;
 
     return null;
+  }
+
+  async obtenerUsuarioId(id: string): Promise<Usuario | null> {
+    const { data, error } = await this.db.cliente
+      .from('usuarios')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) throw new Error('Problema accediendo a la base de datos');
+
+    return data ?? null;
   }
 
   async obtenerClienteMail(email: string) {
@@ -355,21 +408,21 @@ export class UsuarioService {
   }
 
   async obtenerUsuariosPacientes(): Promise<Usuario[]> {
-  const { data, error } = await this.db.cliente
-    .from('usuarios')
-    .select(`*`)
-    .eq('perfil', 'paciente');
+    const { data, error } = await this.db.cliente
+      .from('usuarios')
+      .select(`*`)
+      .eq('perfil', 'paciente');
 
-  if (error) throw new Error('Problema accediendo a la base de datos');
+    if (error) throw new Error('Problema accediendo a la base de datos');
 
-  return data.map(u => ({
-    ...u,
-    imagen_1_path: u.imagen_1_path
-      ? this.db.cliente.storage.from('images').getPublicUrl(u.imagen_1_path).data.publicUrl
-      : null,
-    imagen_2_path: u.imagen_2_path
-      ? this.db.cliente.storage.from('images').getPublicUrl(u.imagen_2_path).data.publicUrl
-      : null,
-  }));
-}
+    return data.map(u => ({
+      ...u,
+      imagen_1_path: u.imagen_1_path
+        ? this.db.cliente.storage.from('images').getPublicUrl(u.imagen_1_path).data.publicUrl
+        : null,
+      imagen_2_path: u.imagen_2_path
+        ? this.db.cliente.storage.from('images').getPublicUrl(u.imagen_2_path).data.publicUrl
+        : null,
+    }));
+  }
 }
