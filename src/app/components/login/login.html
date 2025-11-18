@@ -17,7 +17,15 @@
                 La contraseña debe contener un mínimo de 6 caracteres.
             </small>
         </div>
+        <div class="input">
+            <label>Captcha</label>
+            <div appCaptcha formControlName="captcha"></div>
+            <small [style.visibility]="captcha?.invalid && captcha?.touched ? 'visible' : 'hidden'">
+                Completar el captcha.
+            </small>
+        </div>
     </form>
+    
     <button type="button" class="btn-1" (click)="login()">Ingresar</button>
     <p class="registro-texto">
         ¿No tenés cuenta?

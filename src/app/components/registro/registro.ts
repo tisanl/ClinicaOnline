@@ -5,12 +5,13 @@ import { Router } from '@angular/router';
 import { UsuarioService, Usuario } from '../../services/usuario-service';
 import { SweetAlertService } from '../../services/sweet-alert-service';
 import { EspecialidadesService, Especialidad } from '../../services/especialidades-service';
+import { Captcha } from "../../directives/captcha";
 
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, Captcha],
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })
@@ -33,6 +34,7 @@ export class Registro implements OnInit {
       edad: new FormControl(null, [Validators.required, Validators.pattern('^[0-9]{1,2}$'), Validators.min(18), Validators.max(120)]),
       imagen1: new FormControl(null, Validators.required),
       perfil: new FormControl(null, Validators.required),
+      captcha: new FormControl("", Validators.required),
     })
 
     this.formPaciente = new FormGroup({
@@ -159,6 +161,9 @@ export class Registro implements OnInit {
   }
   get perfil() {
     return this.form.get('perfil');
+  }
+  get captcha() {
+    return this.form.get('captcha');
   }
 
   // Form Paciente

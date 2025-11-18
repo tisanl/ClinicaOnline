@@ -135,6 +135,16 @@
     </form>
     }
 
+    <div class="form-container" [formGroup]="form">
+        <div class="input">
+            <label>Captcha</label>
+            <div appCaptcha formControlName="captcha"></div>
+            <small [style.visibility]="captcha?.invalid && captcha?.touched ? 'visible' : 'hidden'">
+                Completar el captcha.
+            </small>
+        </div>
+    </div>
+
     <button type="button" class="btn-1" (click)="registrarUsuario()">Registrarse</button>
     <p class="registro-texto">
         ¿Ya tenes cuenta?

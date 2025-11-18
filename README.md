@@ -1,59 +1,74 @@
-# ClinicaOnline
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+# 🏥 Clínica Online - Proyecto Final de Laboratorio IV
 
-## Development server
+Este es el proyecto final de la materia **Laboratorio de Computación IV**, desarrollado en Angular 20. Se trata de una clínica online donde pacientes, especialistas y administradores pueden interactuar mediante un sistema de turnos médicos, registro, gestión de usuarios y más.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 📌 Funcionalidades principales
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 🧟‍♂️ Usuario Paciente
+- Registro y login.
+- Sacar turnos.
+- Visualización y cancelación de turnos.
+- Calificación y encuesta de atención.
 
-## Code scaffolding
+### 🩺 Usuario Especialista
+- Registro (Requiere verificación del administrador) y login.
+- Gestión de turnos.
+- Carga de historia clínica tras turno atendido.
+- Visualización de pacientes atendidos.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 🤴🏽 Usuario Administrador
+- Gestión de usuarios.
+- Verificación de especialistas.
+- Acceso a informes.
+- Sacar turnos para pacientes registrados.
+- Posibilidad de cancelar turnos.
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 💻 Tecnologías utilizadas
 
-```bash
-ng generate --help
-```
+- **Frontend**: Angular 20.3
+- **Backend**: Supabase
+- **PDF. gráficos, etc.**: jsPDF, ngx-charts, html2canvas, sweetalert2
+- **Diseño y Estilos**: Angular Material + Bootstrap + CSS personalizado
 
-## Building
+---
 
-To build the project run:
+## 📷 Capturas del proyecto
 
-```bash
-ng build
-```
+### 🧭 Barra de navegación
+![Barra de navegación](./src/assets-readme/nav.png)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 👋 Página de bienvenida + Menú rápido
+![Página bienvenida](./src/assets-readme/bienvenida.png)
+![Menú rápido](./src/assets-readme/menu-rapido.png)
 
-## Running unit tests
+### 📝 Registro de usuarios
+![Registro](./src/assets-readme/registro.png)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### 🔐 Login
+![Login](./src/assets-readme/login.png)
 
-```bash
-ng test
-```
+### 👥 Sección usuarios (admin)
+![Usuarios](./src/assets-readme/usuarios.png)
 
-## Running end-to-end tests
+### 📊 Informes
+![Informes](./src/assets-readme/informes.png)
 
-For end-to-end (e2e) testing, run:
+### 📅 Sacar turno
+![Sacar turno](./src/assets-readme/sacar-turno.png)
 
-```bash
-ng e2e
-```
+### 🙍‍♂️ Mi perfil
+![Perfil](./src/assets-readme/perfil.png)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### 📋 Mis turnos
+![Mis turnos](./src/assets-readme/mis-turnos.png)
 
-## Additional Resources
+## 👨‍💻 Autor
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Santiago Lopez**  
+Proyecto final para **Tecnicatura Universitaria en Programación** – UTN FRA
+

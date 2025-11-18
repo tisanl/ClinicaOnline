@@ -1,4 +1,4 @@
-<main class="card-container">
+<main class="card-container anim-entrar-izquierda">
     <h2 class="titulo">Informes</h2>
 
     <mat-tab-group class="tabs" (selectedTabChange)="onTabChange($event)">
@@ -34,38 +34,82 @@
 
         <!-- Cantidad turnos por especialidad -->
         <mat-tab label="Turnos por Especialidad">
-            <button mat-button (click)="descargarGraficoTurnosPorEspecialidad()">
-                Descargar PDF
-            </button>
-            <canvas #graficoTurnosPorEspecialidades></canvas>
+            <div class="tab-centro">
+                <button mat-button (click)="descargarGraficoTurnosPorEspecialidad()">
+                    Descargar PDF
+                </button>
+                <canvas #graficoTurnosPorEspecialidades></canvas>
+            </div>
         </mat-tab>
 
         <!-- Cantidad turnos por dia -->
         <mat-tab label="Turnos por Dia">
-            <button mat-button (click)="descargarGraficoTurnosPorDia()">
-                Descargar PDF
-            </button>
-            <canvas #graficoTurnosPorDia></canvas>
+            <div class="tab-centro">
+                <button mat-button (click)="descargarGraficoTurnosPorDia()">
+                    Descargar PDF
+                </button>
+                <canvas #graficoTurnosPorDia></canvas>
+            </div>
         </mat-tab>
 
         <!-- Cantidad turnos solicitados por especialista en lapso tiempo -->
         <mat-tab label="Turnos solicitados por especialista">
-            <button mat-button (click)="descargarGraficoTurnosPorDia()">
-                Descargar PDF
-            </button>
-            <mat-form-field>
-                <mat-label>Seleccione el ranfo</mat-label>
-                <mat-date-range-input [rangePicker]="picker">
-                    <input matStartDate placeholder="Start date">
-                    <input matEndDate placeholder="End date">
-                </mat-date-range-input>
-                <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
-            </mat-form-field>
-            
-            <canvas #graficoTurnosSolicitadosEspecialistaLapsoTiempo></canvas>
+            <div class="tab-centro">
+                <button mat-button (click)="descargarGraficoTurnosSolicitadosEspecialistasLapsoTiempo()">
+                    Descargar PDF
+                </button>
+                <canvas #graficoTurnosSolicitadosEspecialistaLapsoTiempo></canvas>
+                <div class="filtros-fecha">
+                    <!-- Fecha DESDE -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Desde</mat-label>
+                        <input matInput [matDatepicker]="pickerDesdeSolicitados" [(ngModel)]="fechaDesde"
+                            (ngModelChange)="actualizarObtenerTurnosSolicitadosEspecialistasLapsoTiempo()">
+                        <mat-datepicker-toggle matSuffix [for]="pickerDesdeSolicitados"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerDesdeSolicitados></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- Fecha HASTA -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Hasta</mat-label>
+                        <input matInput [matDatepicker]="pickerHastaSolicitados" [(ngModel)]="fechaHasta"
+                            (ngModelChange)="actualizarObtenerTurnosSolicitadosEspecialistasLapsoTiempo()">
+                        <mat-datepicker-toggle matSuffix [for]="pickerHastaSolicitados"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerHastaSolicitados></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
         </mat-tab>
+
+        <!-- Cantidad turnos finalizados por especialista en lapso tiempo -->
+        <mat-tab label="Turnos finalizados por especialista">
+            <div class="tab-centro">
+                <button mat-button (click)="descargarGraficoTurnosFinalizadosEspecialistasLapsoTiempo()">
+                    Descargar PDF
+                </button>
+                <canvas #graficoTurnosFinalizadosEspecialistaLapsoTiempo></canvas>
+                <div class="filtros-fecha">
+                    <!-- Fecha DESDE -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Desde</mat-label>
+                        <input matInput [matDatepicker]="pickerDesdeFinalizados" [(ngModel)]="fechaDesde"
+                            (ngModelChange)="actualizarObtenerTurnosFinalizadosEspecialistasLapsoTiempo()">
+                        <mat-datepicker-toggle matSuffix [for]="pickerDesdeFinalizados"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerDesdeFinalizados></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- Fecha HASTA -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Hasta</mat-label>
+                        <input matInput [matDatepicker]="pickerHastaFinalizados" [(ngModel)]="fechaHasta"
+                            (ngModelChange)="actualizarObtenerTurnosFinalizadosEspecialistasLapsoTiempo()">
+                        <mat-datepicker-toggle matSuffix [for]="pickerHastaFinalizados"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerHastaFinalizados></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-tab>
+
 
     </mat-tab-group>
 </main>

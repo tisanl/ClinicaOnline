@@ -5,10 +5,11 @@ import { UsuarioService, Usuario } from '../../services/usuario-service';
 import { SweetAlertService } from '../../services/sweet-alert-service';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Captcha } from "../../directives/captcha";
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, ReactiveFormsModule, MatIconModule, MatButtonModule],
+  imports: [FormsModule, ReactiveFormsModule, MatIconModule, MatButtonModule, Captcha],
   templateUrl: './login.html',
   styleUrl: './login.css',
   standalone: true
@@ -25,6 +26,7 @@ export class Login {
     this.form = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
       password: new FormControl("", [Validators.required, Validators.minLength(6)]),
+      captcha: new FormControl("", Validators.required),
     })
   }
 
@@ -80,6 +82,9 @@ export class Login {
   }
   get password() {
     return this.form.get('password');
+  }
+  get captcha() {
+    return this.form.get('captcha');
   }
 
   goTo(path: string) {

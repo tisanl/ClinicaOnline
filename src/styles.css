@@ -106,3 +106,102 @@
 html, body { height: 100%; }
 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* --- Aparecer suave --- */
+@keyframes aparecerSuave {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.anim-aparecer-suave {
+  animation: aparecerSuave 1s ease-out forwards;
+}
+
+/* --- Subir desde abajo --- */
+@keyframes subirDesdeAbajo {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-subir {
+  animation: subirDesdeAbajo 1s ease-out forwards;
+}
+
+/* --- Entrar desde la derecha --- */
+@keyframes entrarDerecha {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.anim-entrar-derecha {
+  animation: entrarDerecha 0.8s ease-out forwards;
+}
+
+/* --- Entrar desde ARRIBA --- */
+@keyframes bajarDesdeArriba {
+  from {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-bajar {
+  animation: bajarDesdeArriba 1s ease-out forwards;
+}
+
+/* --- Entrar desde la IZQUIERDA --- */
+@keyframes entrarIzquierda {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.anim-entrar-izquierda {
+  animation: entrarIzquierda 1s ease-out forwards;
+}
+
+/* --- Animación "rara": zoom + giro suave --- */
+@keyframes zoomGiroSuave {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) rotate(-5deg) translateY(20px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05) rotate(2deg) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.anim-zoom-giro {
+  animation: zoomGiroSuave 0.9s ease-out forwards;
+}

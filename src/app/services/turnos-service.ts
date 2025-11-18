@@ -299,4 +299,86 @@ export class TurnosService {
       return { dia: diaTxt, cantidad };
     });
   }
+
+  async obtenerCantidadTurnosPorEspecialista(): Promise<{ nombre: string; cantidad: number }[]> {
+    const { data, error } = await this.db.cliente
+      .from('turnos')
+      .select(`especialista:id_especialista ( * ), dia`);
+
+    if (error)
+      throw new Error(error.message);
+
+    const lista = data as any[];
+    const conteo = new Map<string, number>();
+
+    for (const t of lista ?? []) {
+      const nombre = t.especialista!.nombre + ' ' + t.especialista!.apellido;
+      conteo.set(nombre, (conteo.get(nombre) ?? 0) + 1);
+    }
+
+    return Array.from(conteo, ([nombre, cantidad]) => ({ nombre, cantidad }));
+  }
+
+  async obtenerCantidadTurnosPorEspecialistaEntreFechas(desde: string, hasta: string): Promise<{ nombre: string; cantidad: number }[]> {
+    const { data, error } = await this.db.cliente
+      .from('turnos')
+      .select(`especialista:id_especialista ( * ), dia`)
+      .gte('created_at', desde)
+      .lte('created_at', hasta);
+
+    if (error)
+      throw new Error(error.message);
+
+    const lista = data as any[];
+    const conteo = new Map<string, number>();
+
+    for (const t of lista ?? []) {
+      const nombre = t.especialista!.nombre + ' ' + t.especialista!.apellido;
+      conteo.set(nombre, (conteo.get(nombre) ?? 0) + 1);
+    }
+
+    return Array.from(conteo, ([nombre, cantidad]) => ({ nombre, cantidad }));
+  }
+
+  async obtenerCantidadTurnosFinalizadosPorEspecialista(): Promise<{ nombre: string; cantidad: number }[]> {
+    const { data, error } = await this.db.cliente
+      .from('turnos')
+      .select(`especialista:id_especialista ( * ), dia`)
+      .eq('estado', 'finalizado');
+
+    if (error)
+      throw new Error(error.message);
+
+    const lista = data as any[];
+    const conteo = new Map<string, number>();
+
+    for (const t of lista ?? []) {
+      const nombre = t.especialista!.nombre + ' ' + t.especialista!.apellido;
+      conteo.set(nombre, (conteo.get(nombre) ?? 0) + 1);
+    }
+
+    return Array.from(conteo, ([nombre, cantidad]) => ({ nombre, cantidad }));
+  }
+
+  async obtenerCantidadTurnosFinalizadosPorEspecialistaEntreFechas(desde: string, hasta: string): Promise<{ nombre: string; cantidad: number }[]> {
+    const { data, error } = await this.db.cliente
+      .from('turnos')
+      .select(`especialista:id_especialista ( * ), dia`)
+      .gte('dia', desde)
+      .lte('dia', hasta)
+      .eq('estado', 'finalizado');
+
+    if (error)
+      throw new Error(error.message);
+
+    const lista = data as any[];
+    const conteo = new Map<string, number>();
+
+    for (const t of lista ?? []) {
+      const nombre = t.especialista!.nombre + ' ' + t.especialista!.apellido;
+      conteo.set(nombre, (conteo.get(nombre) ?? 0) + 1);
+    }
+
+    return Array.from(conteo, ([nombre, cantidad]) => ({ nombre, cantidad }));
+  }
 }
