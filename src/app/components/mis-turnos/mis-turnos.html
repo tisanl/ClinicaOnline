@@ -1,5 +1,6 @@
 <main class="card-container anim-zoom-giro">
-    <h2 class="titulo">Mis Turnos</h2>
+    @if(perfil === 'admin'){<h2 class="titulo">Turnos</h2>}
+    @else {<h2 class="titulo">Mis Turnos</h2>}
 
     <!-- Especialidades -->
     <h6 class="titulo">Especialidades</h6>

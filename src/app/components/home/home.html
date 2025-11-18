@@ -27,7 +27,7 @@
             <h2 class="sub-titulo">Informes</h2>
             <p class="home-card-text">Pestaña donde ver los informes.</p>
         </div>
-        
+
         }
 
         @if (userData?.perfil !== 'especialista') {
@@ -45,13 +45,17 @@
             <p class="home-card-text">Ver pacientes que atendi al menos una vez.</p>
         </div>
         }
-        
+
         <div class="home-card" (click)="goTo('mis-turnos')">
             <mat-icon>event_available</mat-icon>
-            <h2 class="sub-titulo">Mis Turnos</h2>
+            @if(userData?.perfil === 'admin'){
+            <h2 class="sub-titulo">Turnos</h2>
+            <p class="home-card-text">Listado de turnos.</p>
+            }
+            @else {<h2 class="sub-titulo">Mis Turnos</h2>
             <p class="home-card-text">Listado de mis turnos.</p>
+            }
         </div>
-        
 
         <div class="home-card" (click)="goTo('mi-perfil')">
             <mat-icon>medical_services</mat-icon>
