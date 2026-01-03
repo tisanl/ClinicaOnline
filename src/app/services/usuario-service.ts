@@ -131,7 +131,7 @@ export class UsuarioService {
     console.log('Se cerro la sesion')
 
     if (error)
-      throw new Error('Error al cerrar sesion');
+      throw new Error(error.message);
 
     this.userSubject.next(null)
   }
